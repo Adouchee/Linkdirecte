@@ -1,0 +1,58 @@
+import { edFetch } from "../../core/fetch";
+import { requireCurrentAccount } from "../../core/request";
+import dayjs from "dayjs";
+
+export interface TimetableEntry {
+  id: number;
+  subjectCode: string;
+  subjectLabel: string;
+  teacherName?: string;
+  room?: string;
+  group?: string;
+  startDate: Date;
+  endDate: Date;
+  isCancelled?: boolean;
+  isDetention?: boolean;
+  isExempted?: boolean;
+  color?: string;
+  [key: string]: unknown;
+}
+
+export interface TimetableResult {
+  timetable: TimetableEntry[];
+  [key: string]: unknown;
+}
+
+export async function getTimetable(
+  options: {
+    startDate?: string | Date;
+    endDate?: string | Date;
+    raw?: boolean;
+    explain?: boolean;
+  } = {},
+): Promise<TimetableResult> {
+  const account = requireCurrentAccount();
+  const start = dayjs(options.startDate || new Date()).format("YYYY-MM-DD");
+  const end = dayjs(options.endDate || options.startDate || new Date()).format(
+    "YYYY-MM-DD",
+  );
+
+  const endpoint = `/E/${account.id}/emploidutemps.awp?v=7.14.3&verbe=get`;
+  return edFetch<TimetableResult>(endpoint, {
+    method: "POST",
+    body: {
+      dateDebut: start,
+      dateFin: end,
+      avecTrous: false,
+    },
+    ...options,
+  });
+}
+
+export async function getTimetableIcalUrl(): Promise<string> {
+  const account = requireCurrentAccount();
+  const endpoint = `/ical/E/${account.id}/url.awp?v=7.14.3&verbe=get`;
+
+  const result = await edFetch<{ url: string }>(endpoint, { method: "POST", body: {} });
+  return `https://api.ecoledirecte.com/v3/${result.url}`;
+}
