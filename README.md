@@ -6,7 +6,15 @@
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/group/npm/linkdirecte+github/Scolup/Linkdirecte/stars.svg?theme=blue" /><img alt="badge group" src="https://shieldcn.dev/group/npm/linkdirecte+github/Scolup/Linkdirecte/stars.svg?theme=blue&amp;mode=light" /></picture>
 </p>
 
-## Quick start
+## ⭐️ Features
+
+* 🌳 Tree-shakeable
+* 🚪 Login fully handled
+* 🛣️ Built-in proxy support (for web usage)
+* 🧠 Easy manipulation
+* 💡 Output simplified
+
+## 🚀 Quick start
 
 Linkdirecte is available as an **npm package**.
 
