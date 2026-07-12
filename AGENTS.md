@@ -72,6 +72,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 * For every user prompt, in your answer, **ALWAYS** include a short summary of changes and design choices (if you edited the codebase).
 * Keep the project available on Bun, Node.js, Deno and browsers.
 * **ALWAYS** update the docs when you change something.
+* Before commiting/proposing your changes, run `bun precommit`.
 
 **ALWAYS** use Bun over npm, yarn, pnpm and others.
 
