@@ -1,4 +1,4 @@
-<p align="center">
+<p align="left">
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/glow.svg?title=Linkdirecte&amp;subtitle=Your+first-rate+SDK+for+working+with+EcoleDirecte+data.&amp;logo=data%3Aimage%2Fsvg%2Bxml%2C%3Csvg+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+fill%3D%27none%27+viewBox%3D%270+0+24+25%27%3E%3Cpath+fill%3D%27%2523000%27+d%3D%27M21+11.5c-.3-3.2-4.5-5.6-9.4-5.2s-8.8+4-8.6+7.3c0+0+1.8-5.6+8-6.1+4-.3+7.4+1.5+7.6+4.2.2+2.1-2+4.1-5+5q-.6+0-.4-.3+0-.3-.2-.3l-1.8.1H9.7l-.3-.3.3-1.8H12a.6.6+0+0+0+.4-1l-.5-.3h-2l.3-1.6.1-.2.1-.1+1.8-.2+1.6.1.5-.4.2-.8a.4.4+0+0+0-.3-.5q-.7-.3-2.6-.3c-1.4+0-2.6.2-2.8.4l-.2.4v.8L8+13c-.4+2.1-.8+4.4-.6+4.5q2.5.9+5+.6c5-.4+8.9-3.3+8.6-6.6%27%2F%3E%3C%2Fsvg%3E&amp;mode=dark&amp;theme=blue&amp;align=left" /><img alt="Linkdirecte, your first-rate SDK for working with EcoleDirecte data." src="https://shieldcn.dev/header/glow.svg?title=Linkdirecte&amp;subtitle=Your+first-rate+SDK+for+working+with+EcoleDirecte+data.&amp;logo=data%3Aimage%2Fsvg%2Bxml%2C%3Csvg+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+fill%3D%27none%27+viewBox%3D%270+0+24+25%27%3E%3Cpath+fill%3D%27%2523000%27+d%3D%27M21+11.5c-.3-3.2-4.5-5.6-9.4-5.2s-8.8+4-8.6+7.3c0+0+1.8-5.6+8-6.1+4-.3+7.4+1.5+7.6+4.2.2+2.1-2+4.1-5+5q-.6+0-.4-.3+0-.3-.2-.3l-1.8.1H9.7l-.3-.3.3-1.8H12a.6.6+0+0+0+.4-1l-.5-.3h-2l.3-1.6.1-.2.1-.1+1.8-.2+1.6.1.5-.4.2-.8a.4.4+0+0+0-.3-.5q-.7-.3-2.6-.3c-1.4+0-2.6.2-2.8.4l-.2.4v.8L8+13c-.4+2.1-.8+4.4-.6+4.5q2.5.9+5+.6c5-.4+8.9-3.3+8.6-6.6%27%2F%3E%3C%2Fsvg%3E&amp;mode=light&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
@@ -14,6 +14,8 @@
 * 🧠 Easy manipulation
 * 💡 Output simplified
 * 🛜 Offline handled
+* 🎓 Support for most student features _(parent accounts soon!)_
+* 🌐 Compatible with Node.js, Bun and browser
 
 ## 🚀 Quick start
 
@@ -26,3 +28,16 @@ npm install linkdirecte
 ```bash
 bun install linkdirecte
 ```
+
+Easily log in _(Linkdirecte will handle the rest!)_ :
+
+```typescript
+import { login } from "linkdirecte"
+```
+
+## ⚖️ Legal
+
+Linkdirecte is licensed under the **Affero General Public License 3** (AGPL 3). No warranty.
+
+> [!IMPORTANT]
+> This software was built in the purpose of making data handling easier for anyone working with EcoleDirecte’s data. **Please don’t use this for malicious purposes.**
