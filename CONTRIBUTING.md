@@ -8,8 +8,7 @@ For development, **Bun is required**.
 
 1. 🧑‍🤝‍🧑 Clone the repo
 ```bash
-gh repo clone
-Scolup/Linkdirecte
+gh repo clone Scolup/Linkdirecte
 ```
 2. ⬇️ Install deps
 ```bash
@@ -21,6 +20,8 @@ bun install
 
 * At every production commit (this means before a PR is merged or in a commit directly pushed to main), **run `bun precommit`**. This will run checks and format with prettier.
 * When making a commit, I follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+* If you're working on a big or breaking change, discuss it in an issue with the admins before opening a PR, and link that issue in your PR.
+* To work on Linkdirecte, _fork the project_ and target your PR to either `main` or another official branch.
 
 ## 🤖 Developing with AI
 
@@ -29,6 +30,8 @@ Working with AI is something we **totally accept**, but to these conditions :
 * You are **capable of explaining your changes**
 
 We already wrote resources specifically for agents so they understand the codebase and know how to work with it.
+
+---
 
 <p align="center">
   <a href="https://github.com/Scolup/Linkdirecte/graphs/contributors"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/contributors/Scolup/Linkdirecte.svg?preset=glow&amp;theme=blue&amp;size=80&amp;names=true&amp;align=left&amp;mode=dark" /><img alt="Project contributors" src="https://shieldcn.dev/contributors/Scolup/Linkdirecte.svg?preset=glow&amp;theme=blue&amp;size=80&amp;names=true&amp;align=left&amp;mode=light" /></picture></a>
