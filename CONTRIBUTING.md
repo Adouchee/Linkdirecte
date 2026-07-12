@@ -19,7 +19,7 @@ bun install
 ## 📏 Rules
 
 * At every production commit (this means before a PR is merged or in a commit directly pushed to main), **run `bun precommit`**. This will run checks and format with prettier.
-* When making a commit, I follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+* When making a commit, follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 * If you're working on a big or breaking change, discuss it in an issue with the admins before opening a PR, and link that issue in your PR.
 * To work on Linkdirecte, _fork the project_ and target your PR to either `main` or another official branch.
 
