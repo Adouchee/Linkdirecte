@@ -76,6 +76,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 * Keep the codebase clean, consistent and human.
 * Try to keep the SDK as fast and secure as possible.
 * Your response will be refused if the developer experience is degraded by your changes.
+* **NEVER** touch the version number of the package. Project admins are the only ones allowed to update it.
 
 **ALWAYS** use Bun over npm, yarn, pnpm and others.
 

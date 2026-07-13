@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import {
   getConfig,
   getAccount,
@@ -49,11 +48,11 @@ export async function login(
     if (storedUuid) {
       uuid = storedUuid;
     } else {
-      uuid = randomUUID();
+      uuid = crypto.randomUUID();
       await storage?.set(`ed_uuid_${identifiant}`, uuid);
     }
   } else {
-    uuid = randomUUID();
+    uuid = crypto.randomUUID();
   }
 
   const {

@@ -22,6 +22,7 @@ bun install
 * When making a commit, follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 * If you're working on a big or breaking change, discuss it in an issue with the admins before opening a PR, and link that issue in your PR.
 * To work on Linkdirecte, _fork the project_ and target your PR to either `main` or another official branch.
+* Versioning is managed only by the project admins. Please do not change it directly.
 
 ## 🤖 Developing with AI
 

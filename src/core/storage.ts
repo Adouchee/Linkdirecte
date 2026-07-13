@@ -1,10 +1,4 @@
-import { StorageAdapter } from '../types';
-import {
-  pbkdf2Sync,
-  randomBytes,
-  createCipheriv,
-  createDecipheriv,
-} from 'node:crypto';
+import type { StorageAdapter } from '../types';
 
 const ALGORITHM = 'aes-256-gcm';
 const SALT_LEN = 16;
@@ -13,13 +7,19 @@ const KEY_LEN = 32;
 const TAG_LEN = 16;
 const KDF_ITERATIONS = 100_000;
 
-function deriveKey(secret: string, salt: Buffer): Buffer {
+async function getCrypto() {
+  return import('node:crypto');
+}
+
+async function deriveKey(secret: string, salt: Buffer): Promise<Buffer> {
+  const { pbkdf2Sync } = await getCrypto();
   return pbkdf2Sync(secret, salt, KDF_ITERATIONS, KEY_LEN, 'sha256');
 }
 
-function encrypt(plaintext: string, secret: string): string {
+async function encrypt(plaintext: string, secret: string): Promise<string> {
+  const { randomBytes, createCipheriv } = await getCrypto();
   const salt = randomBytes(SALT_LEN);
-  const key = deriveKey(secret, salt);
+  const key = await deriveKey(secret, salt);
   const iv = randomBytes(IV_LEN);
   const cipher = createCipheriv(ALGORITHM, key, iv);
   const encrypted = Buffer.concat([
@@ -31,7 +31,8 @@ function encrypt(plaintext: string, secret: string): string {
   return Buffer.concat([salt, iv, tag, encrypted]).toString('base64');
 }
 
-function decrypt(data: string, secret: string): string {
+async function decrypt(data: string, secret: string): Promise<string> {
+  const { createDecipheriv } = await getCrypto();
   const buf = Buffer.from(data, 'base64');
   if (buf.length < SALT_LEN + IV_LEN + TAG_LEN)
     throw new Error('Invalid encrypted data');
@@ -39,7 +40,7 @@ function decrypt(data: string, secret: string): string {
   const iv = buf.subarray(SALT_LEN, SALT_LEN + IV_LEN);
   const tag = buf.subarray(SALT_LEN + IV_LEN, SALT_LEN + IV_LEN + TAG_LEN);
   const encrypted = buf.subarray(SALT_LEN + IV_LEN + TAG_LEN);
-  const key = deriveKey(secret, salt);
+  const key = await deriveKey(secret, salt);
   const decipher = createDecipheriv(ALGORITHM, key, iv);
   decipher.setAuthTag(tag);
   const decrypted = Buffer.concat([
@@ -79,7 +80,7 @@ export const fileStorage = (
     const { default: fs } = await import('node:fs/promises');
     try {
       const content = await fs.readFile(filePath, 'utf-8');
-      return JSON.parse(decrypt(content, INTERNAL_KEY));
+      return JSON.parse(await decrypt(content, INTERNAL_KEY));
     } catch {
       return {};
     }
@@ -89,7 +90,7 @@ export const fileStorage = (
     const { default: fs } = await import('node:fs/promises');
     const { dirname } = await import('node:path');
     const content = JSON.stringify(data);
-    const encrypted = encrypt(content, INTERNAL_KEY);
+    const encrypted = await encrypt(content, INTERNAL_KEY);
     const dir = dirname(filePath);
     if (dir) {
       await fs.mkdir(dir, { recursive: true });

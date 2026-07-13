@@ -1,7 +1,7 @@
 {
   "name": "linkdirecte",
   "version": "1.0.0",
-  "description": "Your first-rate SDK for the EcoleDirecte API.",
+  "description": "Your first-rate SDK for working with EcoleDirecte data.",
   "license": "AGPL-3.0-or-later",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -23,7 +23,9 @@
     "build": "tsup",
     "lint": "tsc --noEmit",
     "format": "prettier --write src/",
-    "format:check": "prettier --check src/"
+    "format:check": "prettier --check src/",
+    "precommit": "npm run format",
+    "prepublish": "npm run format && npm run build"
   },
   "dependencies": {
     "dayjs": "^1.11.21",

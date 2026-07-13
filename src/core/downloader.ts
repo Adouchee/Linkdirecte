@@ -1,6 +1,5 @@
 import { edFetch } from './fetch';
 import { getToken } from './store';
-import fs from 'node:fs/promises';
 
 export type DownloadFormat = 'buffer' | 'blob' | 'stream';
 
@@ -29,6 +28,7 @@ export async function download(
   if (options.filename) {
     const blob = await response.blob();
     const buffer = Buffer.from(await blob.arrayBuffer());
+    const { default: fs } = await import('node:fs/promises');
     await fs.writeFile(options.filename, buffer);
   }
 
