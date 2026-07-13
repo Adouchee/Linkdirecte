@@ -62,7 +62,7 @@ Full docs are available in [the `docs` directory](docs/).
 
 ## ⚖️ Legal
 
-Linkdirecte is licensed under the **Affero General Public License 3** (AGPL 3). No warranty.
+Linkdirecte is licensed under the **Affero General Public License 3** (AGPL 3). No warranty. This means if you use Linkdirecte in your project and make it publicly available by any way (executable, website, server...), you _must_ make it open-source under the same license.
 
 This project is **not affiliated** in any way with Aplim.
 
