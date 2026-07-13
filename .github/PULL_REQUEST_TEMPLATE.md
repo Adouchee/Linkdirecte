@@ -1,4 +1,4 @@
-<p align="left">
+<p align="center">
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/header/glow.svg?title=Pull+Request&amp;subtitle=Thanks+for+participating+in+Linkdirecte%E2%80%99s+development%21&amp;logo=lu%3AGitPullRequestArrow&amp;mode=dark&amp;theme=blue&amp;align=left" /><img alt="Thanks for participating in Linkdirecte’s development!" src="https://shieldcn.dev/header/glow.svg?title=Pull+Request&amp;subtitle=Thanks+for+participating+in+Linkdirecte%E2%80%99s+development%21&amp;logo=lu%3AGitPullRequestArrow&amp;mode=light&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
