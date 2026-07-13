@@ -6,7 +6,7 @@
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/group/npm/linkdirecte+github/Scolup/Linkdirecte/stars+github/Scolup/Linkdirecte/license+badge/Actively-maintained-22c55e.svg?variant=secondary&amp;theme=blue" /><img alt="badge group" src="https://shieldcn.dev/group/npm/linkdirecte+github/Scolup/Linkdirecte/stars+github/Scolup/Linkdirecte/license+badge/Actively-maintained-22c55e.svg?variant=secondary&amp;theme=blue&amp;mode=light" /></picture>
 </p>
 
-## ⭐️ Features
+## ❤️ Features
 
 * 🌳 Tree-shakeable
 * 🚪 Login fully handled (2FA, GTK, cn/cv, session refresh…)
