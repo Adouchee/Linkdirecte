@@ -1,7 +1,7 @@
-name: "\u2795 Feature request/idea"
+name: "\u2795 Feature request"
 description: "Have an idea to make Linkdirecte better? We'd love to hear it."
 title: "[\u2795] "
-labels: ["enhancement", "feature request"]
+labels: ["question"]
 assignees:
   - Adouchee
 
@@ -10,7 +10,7 @@ body:
     attributes:
       value: |
         <p align="center">
-          <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Feature+request&amp;subtitle=Thanks+for+helping+enriching+Linkdirecte%21&amp;logo=lu%3AGitPullRequestDraft&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Feature request | Thanks for helping enriching Linkdirecte!" src="https://shieldcn.dev/header/glow.svg?title=Feature+request&amp;subtitle=Thanks+for+helping+enriching+Linkdirecte%21&amp;logo=lu%3AGitPullRequestDraft&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+          <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Question&amp;subtitle=Thanks+for+your+interest+in+Linkdirecte%21&amp;logo=lu%3ALightbulb&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Question | Thanks for your interest in Linkdirecte!" src="https://shieldcn.dev/header/glow.svg?title=Question&amp;subtitle=Thanks+for+your+interest+in+Linkdirecte%21&amp;logo=lu%3ALightbulb&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
         </p>
 
         All ideas are welcome. Big or small, rough or refined. If it would make Linkdirecte better for you, it's worth sharing.
@@ -41,16 +41,6 @@ body:
       placeholder: "e.g. Similar to how Blocksnote populates the averages alone."
     validations:
       required: false
-
-  - type: dropdown
-    id: attribution
-    attributes:
-      label: Attribution
-      options:
-        - I would like to build this feature myself
-        - I'll let someone else build this feature
-    validations:
-      required: true
 
   - type: checkboxes
     id: checklist
