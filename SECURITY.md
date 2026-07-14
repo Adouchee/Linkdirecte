@@ -1,4 +1,4 @@
-<p align="left">
+<p align="center">
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Security+policy&amp;subtitle=Keeping+Linkdirecte+safe+is+a+priority.&amp;logo=lu%3ALock&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Security policy | Keeping Linkdirecte safe is a priority." src="https://shieldcn.dev/header/glow.svg?title=Security+policy&amp;subtitle=Keeping+Linkdirecte+safe+is+a+priority.&amp;logo=lu%3ALock&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
@@ -6,7 +6,7 @@
 
 ## Reporting a vulnerability
 
-If you discover a security vulnerability in Linkdirecte, **please do not open a public issue.**
+If you discover a security vulnerability in Linkdirecte, **please do not open a public issue or PR.**
 
 Instead, email us at **[security@scolup.qzz.io](mailto:security@scolup.qzz.io)** with:
 
@@ -18,7 +18,7 @@ We will acknowledge your report within **48 hours** and aim to provide a fix or 
 
 ## Supported versions
 
-Security patches are applied to the **latest release** only.
+Security patches are applied to the **latest release** only. If the latest release contains newly introduced breaking changes, we'll also apply patches to the previous release.
 
 ## Scope
 
