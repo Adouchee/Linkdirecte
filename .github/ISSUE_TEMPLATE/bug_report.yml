@@ -9,7 +9,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Thanks for reporting a bug! \u2764\ufe0f
+        <p align="center">
+          <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Bug+report&amp;subtitle=Thanks+for+helping+keeping+Linkdirecte+stable%21&amp;logo=lu%3ABug&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Bug report | Thanks for helping keeping Linkdirecte stable!" src="https://shieldcn.dev/header/glow.svg?title=Bug+report&amp;subtitle=Thanks+for+helping+keeping+Linkdirecte+stable%21&amp;logo=lu%3ABug&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+        </p>
 
         Every report helps us keep Linkdirecte reliable. No detail is too small — even if you're not sure it's a bug, go ahead and file it.
 
@@ -18,19 +20,7 @@ body:
     attributes:
       label: What happened?
       description: A clear and concise description of the bug.
-      placeholder: e.g. "When I click the share button, nothing happens."
-    validations:
-      required: true
-
-  - type: textarea
-    id: steps
-    attributes:
-      label: Steps to reproduce
-      description: How can we see this bug ourselves?
-      placeholder: |
-        1. Go to '...'
-        2. Click on '...'
-        3. See error
+      placeholder: e.g. "The getGrades() function returns an empty array when called."
     validations:
       required: true
 
@@ -39,7 +29,7 @@ body:
     attributes:
       label: Expected behavior
       description: What did you expect to happen instead?
-      placeholder: "e.g. The share button should open the share dialog."
+      placeholder: "e.g. It should return an array of grades."
     validations:
       required: true
 
@@ -48,19 +38,17 @@ body:
     attributes:
       label: Environment
       description: |
-        Which runtime and version are you using? Check with `node --version`, `bun --version`, or `deno --version`.
+        Which runtime and version are you using? Check with `node --version`, `bun --version`, or `deno --version`, or browser info.
       placeholder: |
-        - Runtime: Bun 1.1.0
-        - OS: macOS 14.3
-        - Browser (if applicable): Chrome 122
+        Bun 1.1.0 or Chromium 152.0.7943.0
     validations:
-      required: false
+      required: true
 
   - type: textarea
     id: context
     attributes:
       label: Additional context
-      description: Anything else that might help? Screenshots, logs, links — all welcome.
+      description: Anything else that might help? Logs, code snippets...
       placeholder: "e.g. Screenshot of the error, console output, related issues..."
     validations:
       required: false
@@ -71,6 +59,6 @@ body:
       label: Before submitting
       options:
         - label: I am using a recent version of Linkdirecte
-          required: false
+          required: true
         - label: I checked that this bug hasn't already been reported
-          required: false
+          required: true

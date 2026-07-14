@@ -1,7 +1,7 @@
 name: "\u2795 Feature request"
 description: "Have an idea to make Linkdirecte better? We'd love to hear it."
 title: "[\u2795] "
-labels: ["enhancement"]
+labels: ["enhancement", "feature request"]
 assignees:
   - Adouchee
 
@@ -9,7 +9,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Thanks for your idea! \u2728
+        <p align="center">
+          <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Feature+request&amp;subtitle=Thanks+for+helping+enriching+Linkdirecte%21&amp;logo=lu%3AGitPullRequestDraft&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Feature request | Thanks for helping enriching Linkdirecte!" src="https://shieldcn.dev/header/glow.svg?title=Feature+request&amp;subtitle=Thanks+for+helping+enriching+Linkdirecte%21&amp;logo=lu%3AGitPullRequestDraft&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+        </p>
 
         All ideas are welcome — big or small, rough or refined. If it would make Linkdirecte better for you, it's worth sharing.
 
@@ -55,4 +57,4 @@ body:
       label: Before submitting
       options:
         - label: I checked that this hasn't already been requested or implemented
-          required: false
+          required: true
