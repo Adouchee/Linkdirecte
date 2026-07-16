@@ -175,7 +175,7 @@ describe('Authentication Flow', () => {
     expect(result.user.firstName).toBe('John');
     expect(result.user.lastName).toBe('Doe');
     expect(result.token).toBe('mocked_session_token');
-    expect(getAccount()?.id).toBe(98765);
+    expect(getAccount()?.id).toBe(9876);
     expect(getLastTokenRefresh()).toBeDefined();
 
     // Verify requests sent
