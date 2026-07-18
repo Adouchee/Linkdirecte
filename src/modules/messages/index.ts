@@ -53,10 +53,19 @@ export async function getMessages(
     ...options,
   });
 
-  if (options.withContent && result.messages) {
-    result.messages.received = await fetchMessageContents(
-      result.messages.received || [],
-      options,
+  if (options.withContent && result.messages?.received) {
+    result.messages.received = await Promise.all(
+      result.messages.received.map(async (msg) => {
+        try {
+          const detail = await getMessage(msg.id, {
+            raw: options.raw,
+            explain: options.explain,
+          });
+          return { ...msg, ...detail };
+        } catch {
+          return msg;
+        }
+      }),
     );
   }
 
@@ -106,23 +115,4 @@ export async function sendMessage(
     },
     ...options,
   });
-}
-
-async function fetchMessageContents(
-  messages: any[],
-  options: { raw?: boolean; explain?: boolean },
-): Promise<any[]> {
-  return Promise.all(
-    messages.map(async (msg) => {
-      try {
-        const detail = (await getMessage(msg.id, {
-          raw: options.raw,
-          explain: options.explain,
-        })) as any;
-        return { ...msg, ...detail };
-      } catch {
-        return msg;
-      }
-    }),
-  );
 }

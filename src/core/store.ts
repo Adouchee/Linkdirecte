@@ -50,35 +50,26 @@ export function setConfig(config: Partial<EdConfig>): void {
     !state.config.storage
   ) {
     state.hasDetectedStorage = true;
-    if (typeof (globalThis as any).indexedDB !== 'undefined') {
-      state.rawStorage = indexedDBStorage;
-    } else if (typeof (globalThis as any).localStorage !== 'undefined') {
-      state.rawStorage = localStorageStorage;
-    } else if (
-      typeof globalThis.process !== 'undefined' &&
-      globalThis.process.versions != null &&
-      (globalThis.process.versions.node != null ||
-        globalThis.process.versions.bun != null)
-    ) {
-      state.rawStorage = nodeStorage();
-    } else {
-      state.rawStorage = memoryStorage;
-    }
+    const proc = (globalThis as any).process;
+    state.rawStorage =
+      typeof (globalThis as any).indexedDB !== 'undefined'
+        ? indexedDBStorage
+        : typeof (globalThis as any).localStorage !== 'undefined'
+          ? localStorageStorage
+          : proc &&
+              proc.versions &&
+              (proc.versions.node != null || proc.versions.bun != null)
+            ? nodeStorage()
+            : memoryStorage;
   }
 
   state.config = { ...state.config, ...config };
-
   const passkey = state.config.passkey;
-  const baseStorage = state.rawStorage;
-  if (baseStorage) {
-    if (passkey) {
-      state.config.storage = encryptedStorage(baseStorage, passkey);
-    } else {
-      state.config.storage = baseStorage;
-    }
-  } else {
-    state.config.storage = undefined;
-  }
+  state.config.storage = state.rawStorage
+    ? passkey
+      ? encryptedStorage(state.rawStorage, passkey)
+      : state.rawStorage
+    : undefined;
 }
 
 export function getToken(): string | undefined {
@@ -142,18 +133,26 @@ export async function persistSession(): Promise<void> {
   const storage = getConfig().storage;
   if (!storage) return;
 
-  if (state.token) await storage.set(STORAGE_KEYS.token, state.token);
+  const promises = [];
+  if (state.token) promises.push(storage.set(STORAGE_KEYS.token, state.token));
   if (state.twofaToken)
-    await storage.set(STORAGE_KEYS.twofaToken, state.twofaToken);
+    promises.push(storage.set(STORAGE_KEYS.twofaToken, state.twofaToken));
   if (state.account)
-    await storage.set(STORAGE_KEYS.account, JSON.stringify(state.account));
-  if (state.accounts)
-    await storage.set(STORAGE_KEYS.accounts, JSON.stringify(state.accounts));
-  if (state.lastTokenRefresh)
-    await storage.set(
-      STORAGE_KEYS.lastRefresh,
-      state.lastTokenRefresh.toISOString(),
+    promises.push(
+      storage.set(STORAGE_KEYS.account, JSON.stringify(state.account)),
     );
+  if (state.accounts)
+    promises.push(
+      storage.set(STORAGE_KEYS.accounts, JSON.stringify(state.accounts)),
+    );
+  if (state.lastTokenRefresh)
+    promises.push(
+      storage.set(
+        STORAGE_KEYS.lastRefresh,
+        state.lastTokenRefresh.toISOString(),
+      ),
+    );
+  await Promise.all(promises);
 }
 
 export async function clearSession(): Promise<void> {
