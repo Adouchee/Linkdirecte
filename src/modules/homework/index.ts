@@ -27,30 +27,21 @@ export async function getHomework(
   options: { withContent?: boolean; raw?: boolean; explain?: boolean } = {},
 ): Promise<HomeworkResult> {
   const account = requireCurrentAccount();
-  const request = {
-    endpoint: `/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=get`,
-    options: postOptions({}, options),
-  };
   const result = await edFetch<HomeworkResult>(
-    request.endpoint,
-    request.options,
+    `/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=get`,
+    postOptions({}, options),
   );
 
   if (options.withContent) {
-    const dates = Object.keys(result);
-    const details = await Promise.all(
-      dates.map(async (date) => {
-        const dayDetail = await getHomeworkForDate(date, {
+    await Promise.all(
+      Object.keys(result).map(async (date) => {
+        const detail = (await getHomeworkForDate(date, {
           raw: options.raw,
           explain: options.explain,
-        });
-        return { date, detail: dayDetail };
+        })) as any;
+        result[date] = detail.subjects || detail;
       }),
     );
-    details.forEach(({ date, detail }) => {
-      const d = detail as any;
-      result[date] = d.subjects || d;
-    });
   }
 
   return result;

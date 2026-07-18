@@ -470,5 +470,44 @@ describe('Core Fetch Mechanism & Error Handling', () => {
       const decrypted = await config.storage!.get('ed_tk');
       expect(decrypted).toBe('my-secret-token');
     });
+
+    it('verifies that sequential writes in persistSession prevent read-modify-write adapter race conditions', async () => {
+      const { persistSession } = await import('../src/core/store');
+      let fileContents: Record<string, string> = {};
+      const rmwStorage = {
+        async get(key: string) {
+          await new Promise((r) => setTimeout(r, 2));
+          return fileContents[key] || null;
+        },
+        async set(key: string, value: string) {
+          // Read-Modify-Write simulation:
+          // Read current "fileContents", modify, and write back with latency
+          await new Promise((r) => setTimeout(r, 2));
+          const current = { ...fileContents };
+          current[key] = value;
+          await new Promise((r) => setTimeout(r, 2));
+          fileContents = current;
+        },
+        async delete(key: string) {
+          await new Promise((r) => setTimeout(r, 2));
+          const current = { ...fileContents };
+          delete current[key];
+          await new Promise((r) => setTimeout(r, 2));
+          fileContents = current;
+        },
+      };
+
+      setToken('token-abc');
+      setAccount({ ...mockAccount, id: 1111 });
+
+      configure({ storage: rmwStorage });
+      await persistSession();
+
+      const storedToken = await rmwStorage.get('ed_tk');
+      const storedAccount = await rmwStorage.get('ed_acc');
+
+      expect(storedToken).toBe('token-abc');
+      expect(storedAccount).toContain('1111');
+    });
   });
 });

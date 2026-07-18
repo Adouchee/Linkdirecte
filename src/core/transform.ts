@@ -238,15 +238,19 @@ function renameKey(key: string): string {
 
 const BASE64_CONTENT_KEYS = new Set(['content']);
 
+export function decodeBase64(value: string): string {
+  const binary = atob(value);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder('utf-8').decode(bytes);
+}
+
 export function decodeBase64Content(value: string): string {
   if (value.length < 20) return value;
   try {
-    const binary = atob(value);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) {
-      bytes[i] = binary.charCodeAt(i);
-    }
-    return new TextDecoder('utf-8').decode(bytes);
+    return decodeBase64(value);
   } catch {
     return value;
   }

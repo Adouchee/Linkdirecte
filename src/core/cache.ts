@@ -64,28 +64,20 @@ const ENDPOINT_TO_MODULE: Array<{
 ];
 
 export function resolveModule(endpoint: string): keyof CacheConfig | undefined {
-  for (const { pattern, module } of ENDPOINT_TO_MODULE) {
-    if (pattern.test(endpoint)) return module;
-  }
-  return undefined;
+  return ENDPOINT_TO_MODULE.find(({ pattern }) => pattern.test(endpoint))
+    ?.module;
 }
 
 export function parseDuration(str: string | false | undefined): number {
   if (!str) return 0;
   const match = str.match(/^(\d+)([smh])$/);
   if (!match) return 0;
-  const val = parseInt(match[1], 10);
-  const unit = match[2];
-  switch (unit) {
-    case 's':
-      return val * 1000;
-    case 'm':
-      return val * 60_000;
-    case 'h':
-      return val * 3_600_000;
-    default:
-      return 0;
-  }
+  const multipliers: Record<string, number> = {
+    s: 1000,
+    m: 60_000,
+    h: 3_600_000,
+  };
+  return parseInt(match[1], 10) * (multipliers[match[2]] ?? 0);
 }
 
 export function getCacheTtl(module: keyof CacheConfig): number {
@@ -98,8 +90,10 @@ function stableStringify(value: unknown): string {
   if (value === null || value === undefined) return 'null';
   if (typeof value !== 'object') return JSON.stringify(value);
   if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
-  const keys = Object.keys(value as Record<string, unknown>).sort();
-  return `{${keys.map((k) => `${JSON.stringify(k)}:${stableStringify((value as Record<string, unknown>)[k])}`).join(',')}}`;
+  return `{${Object.keys(value)
+    .sort()
+    .map((k) => `${JSON.stringify(k)}:${stableStringify((value as any)[k])}`)
+    .join(',')}}`;
 }
 
 export function buildCacheKey(endpoint: string, body?: unknown): string {

@@ -50,35 +50,26 @@ export function setConfig(config: Partial<EdConfig>): void {
     !state.config.storage
   ) {
     state.hasDetectedStorage = true;
-    if (typeof (globalThis as any).indexedDB !== 'undefined') {
-      state.rawStorage = indexedDBStorage;
-    } else if (typeof (globalThis as any).localStorage !== 'undefined') {
-      state.rawStorage = localStorageStorage;
-    } else if (
-      typeof globalThis.process !== 'undefined' &&
-      globalThis.process.versions != null &&
-      (globalThis.process.versions.node != null ||
-        globalThis.process.versions.bun != null)
-    ) {
-      state.rawStorage = nodeStorage();
-    } else {
-      state.rawStorage = memoryStorage;
-    }
+    const proc = (globalThis as any).process;
+    state.rawStorage =
+      typeof (globalThis as any).indexedDB !== 'undefined'
+        ? indexedDBStorage
+        : typeof (globalThis as any).localStorage !== 'undefined'
+          ? localStorageStorage
+          : proc &&
+              proc.versions &&
+              (proc.versions.node != null || proc.versions.bun != null)
+            ? nodeStorage()
+            : memoryStorage;
   }
 
   state.config = { ...state.config, ...config };
-
   const passkey = state.config.passkey;
-  const baseStorage = state.rawStorage;
-  if (baseStorage) {
-    if (passkey) {
-      state.config.storage = encryptedStorage(baseStorage, passkey);
-    } else {
-      state.config.storage = baseStorage;
-    }
-  } else {
-    state.config.storage = undefined;
-  }
+  state.config.storage = state.rawStorage
+    ? passkey
+      ? encryptedStorage(state.rawStorage, passkey)
+      : state.rawStorage
+    : undefined;
 }
 
 export function getToken(): string | undefined {
@@ -166,13 +157,11 @@ export async function clearSession(): Promise<void> {
   const storage = getConfig().storage;
   if (!storage) return;
 
-  await Promise.all([
-    storage.delete(STORAGE_KEYS.token),
-    storage.delete(STORAGE_KEYS.twofaToken),
-    storage.delete(STORAGE_KEYS.account),
-    storage.delete(STORAGE_KEYS.accounts),
-    storage.delete(STORAGE_KEYS.lastRefresh),
-  ]);
+  await storage.delete(STORAGE_KEYS.token);
+  await storage.delete(STORAGE_KEYS.twofaToken);
+  await storage.delete(STORAGE_KEYS.account);
+  await storage.delete(STORAGE_KEYS.accounts);
+  await storage.delete(STORAGE_KEYS.lastRefresh);
 }
 
 export async function loadSession(): Promise<boolean> {
