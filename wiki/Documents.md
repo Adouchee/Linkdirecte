@@ -61,6 +61,55 @@ A promise that resolves to a `DocumentsResult` object containing document lists 
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `DocumentsResult` payload returned by `getDocuments()`:
+
+```typescript
+{
+  factures: [
+    {
+      id: 10485,
+      name: "Facture Scolarité Mars 2026",
+      date: new Date("2026-03-01T00:00:00.000Z"),
+      size: 145000, // 145KB
+      url: "https://api.ecoledirecte.com/v3/document.awp?id=10485",
+      studentId: "12345",
+      signatureRequired: false,
+      type: "Facture"
+    }
+  ],
+  grades: [
+    {
+      id: 10486,
+      name: "Bulletin du 1er Trimestre",
+      date: new Date("2026-02-15T00:00:00.000Z"),
+      size: 250000, // 250KB
+      url: "https://api.ecoledirecte.com/v3/document.awp?id=10486",
+      studentId: "12345",
+      signatureRequired: true, // Needs electronic signature!
+      type: "Bulletin"
+    }
+  ],
+  viescolaire: [],
+  administratives: [
+    {
+      id: 10487,
+      name: "Fiche d'inscription 2026-2027",
+      date: new Date("2026-03-10T00:00:00.000Z"),
+      size: 412000,
+      url: "https://api.ecoledirecte.com/v3/document.awp?id=10487",
+      studentId: "12345",
+      signatureRequired: false,
+      type: "Administratif"
+    }
+  ],
+  toUploadList: []
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `DocumentsResult`

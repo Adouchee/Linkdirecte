@@ -30,8 +30,6 @@ Welcome to the official, exhaustive guide for **Linkdirecte**! Linkdirecte is _t
 - [📝 Forms & QCMs](QCMs.md) | Fetch assigned quizzes, inspect questions, and submit answer choices.
 - [🔔 Event Polling](Event%20listen.md) | Hook up real-time event listeners for grades, messages, or activities.
 
-### Type Reference
-- [🗂️ Complete Type Reference](Types.md) | Quick reference for public TypeScript interfaces and data models.
 
 ---
 

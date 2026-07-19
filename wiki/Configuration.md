@@ -231,3 +231,77 @@ configure({
 // Start background syncing!
 startAutoPrefetch();
 ```
+
+---
+
+## 🗂️ Type Definitions
+
+### `EdConfig`
+
+Defines global parameters passed to `configure()`.
+
+```typescript
+interface EdConfig {
+  userAgent?: string;
+  proxyUrl?: string;
+  maxRetries?: number;
+  retryDelay?: number;
+  concurrency?: number;
+  timeout?: number;
+  storage?: StorageAdapter;
+  passkey?: string;
+  offlineQueue?: boolean;
+  prefetch?: PrefetchConfig;
+  onError?: ErrorMiddleware;
+  on2faRequired?: (
+    question: string,
+    choices: string[]
+  ) => number | string | Promise<number | string>;
+  onCredentialsRequired?: () =>
+    | { identifiant: string; motdepasse: string }
+    | Promise<{ identifiant: string; motdepasse: string }>;
+  cache?: CacheConfig;
+  cacheMaxEntries?: number;
+}
+```
+
+### `PrefetchConfig`
+
+Configures the background cache prefetching daemon.
+
+```typescript
+interface PrefetchConfig {
+  enabled?: boolean;
+  interval?: string | false; // e.g., "30s", "5m", "1h", or false to disable
+  modules?: string[];
+}
+```
+
+### `CacheConfig`
+
+Per-module cache durations. You can configure how long items should stay cached.
+
+```typescript
+interface CacheConfig {
+  grades?: string | false;
+  timetable?: string | false;
+  messages?: string | false;
+  homework?: string | false;
+  documents?: string | false;
+  cloud?: string | false;
+  attendance?: string | false;
+  timeline?: string | false;
+}
+```
+
+### `StorageAdapter`
+
+The standard interface for defining custom data storage persistence.
+
+```typescript
+interface StorageAdapter {
+  get(key: string): string | null | Promise<string | null>;
+  set(key: string, value: string): void | Promise<void>;
+  delete(key: string): void | Promise<void>;
+}
+```

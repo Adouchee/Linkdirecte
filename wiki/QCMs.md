@@ -106,6 +106,56 @@ function submitQcmAnswer(
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `QcmsResult` payload returned by `getQcms()`:
+
+```typescript
+{
+  associations: [
+    {
+      id: 48572,
+      qcmId: 1042,
+      title: "Quiz de Révision - Les fractions",
+      subjectLabel: "Mathématiques",
+      teacherName: "Mme. Dupont",
+      date: new Date("2026-03-12T00:00:00.000Z"),
+      status: "Not Started"
+    }
+  ]
+}
+```
+
+Below is an example of the resolved `QcmDetailResult` payload returned by `getQcmDetail(qcmId, associationId)`:
+
+```typescript
+{
+  qcmId: 1042,
+  questions: [
+    {
+      id: 9001,
+      label: "Quelle est la valeur de 1/2 + 1/4 ?",
+      choices: [
+        { id: 301, label: "a) 1/6" },
+        { id: 302, label: "b) 3/4" },
+        { id: 303, label: "c) 2/3" }
+      ]
+    },
+    {
+      id: 9002,
+      label: "Une fraction dont le numérateur est supérieur au dénominateur est une fraction :",
+      choices: [
+        { id: 304, label: "a) Propre" },
+        { id: 305, label: "b) Impropre" },
+        { id: 306, label: "c) Équivalente" }
+      ]
+    }
+  ]
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `QcmsResult`

@@ -93,6 +93,30 @@ if (result.success) {
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `AccountSettings` payload returned by `getSettings()` or `updateSettings()`:
+
+```typescript
+{
+  id: 12345,
+  identifiant: "jane.doe",
+  email: "jane.doe@scolup.edu",
+  mobilePhone: "+33612345678",
+  secretQuestion: "What was the name of your first pet?",
+  answer: "Fluffy",
+  accessToken: "secure-access-token-9988",
+  possibleQuestions: [
+    "What was the name of your first pet?",
+    "What is your mother's maiden name?",
+    "In which city were you born?",
+    "What was the model of your first car?"
+  ]
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `AccountSettings`

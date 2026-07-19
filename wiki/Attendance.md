@@ -51,6 +51,59 @@ A promise that resolves to an `AttendanceResult` object.
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `AttendanceResult` payload returned by `getAttendance()`:
+
+```typescript
+{
+  absences: [
+    {
+      id: 8872,
+      date: new Date("2026-02-18T08:00:00.000Z"),
+      type: "Absence",
+      subjectLabel: "Mathématiques",
+      isJustified: true,
+      justificationType: "Medical",
+      reason: "Flu illness",
+      teacherName: "Mme. Dupont",
+      justifiedOnline: true,
+      dontNeedJustification: false,
+      day: new Date("2026-02-18T00:00:00.000Z")
+    }
+  ],
+  delays: [
+    {
+      id: 8873,
+      date: new Date("2026-03-05T08:15:00.000Z"),
+      type: "Retard",
+      subjectLabel: "Français",
+      isJustified: false,
+      reason: "Missed the school bus",
+      teacherName: "M. Martin",
+      justifiedOnline: false,
+      dontNeedJustification: false,
+      day: new Date("2026-03-05T00:00:00.000Z")
+    }
+  ],
+  punishments: [
+    {
+      id: 8874,
+      date: new Date("2026-03-10T14:00:00.000Z"),
+      type: "Punition",
+      reason: "Disruptive behavior during class",
+      teacherName: "M. Martin",
+      licensePoints: 2,
+      day: new Date("2026-03-10T00:00:00.000Z")
+    }
+  ],
+  attendance: [],
+  settings: {}
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `AttendanceResult`

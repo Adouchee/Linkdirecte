@@ -98,6 +98,71 @@ if (result.success) {
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `MessagesResult` payload returned by `getMessages()`:
+
+```typescript
+{
+  messages: {
+    received: [
+      {
+        id: 746352,
+        subject: "Information regarding parent-teacher meetings",
+        date: new Date("2026-03-12T14:20:00.000Z"),
+        isRead: false,
+        fromName: "M. le Proviseur",
+        isAnswered: false,
+        isTransferred: false,
+        canAnswer: false
+      },
+      {
+        id: 746351,
+        subject: "Class schedule update",
+        content: "<p>Hello, please note that the math class next Friday has been moved to room 204...</p>",
+        date: new Date("2026-03-10T08:30:00.000Z"),
+        isRead: true,
+        fromName: "Mme. Dupont",
+        isAnswered: true,
+        isTransferred: false,
+        canAnswer: true
+      }
+    ],
+    sent: [
+      {
+        id: 746399,
+        subject: "RE: Question on homework #3",
+        date: new Date("2026-03-11T16:00:00.000Z"),
+        isRead: true,
+        fromName: "Jane Doe",
+        isAnswered: false,
+        isTransferred: false,
+        canAnswer: true
+      }
+    ],
+    drafts: []
+  }
+}
+```
+
+And below is an example of a single `MessageEntry` returned by `getMessage(id)`:
+
+```typescript
+{
+  id: 746352,
+  subject: "Information regarding parent-teacher meetings",
+  content: "Dear students and parents,<br><br>The next parent-teacher meeting will take place on March 25th at 17:00. Please schedule your time slots accordingly.<br><br>Best regards,<br>Administration",
+  date: new Date("2026-03-12T14:20:00.000Z"),
+  isRead: true, // Marked as read upon opening
+  fromName: "M. le Proviseur",
+  isAnswered: false,
+  isTransferred: false,
+  canAnswer: false
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `MessagesResult`
