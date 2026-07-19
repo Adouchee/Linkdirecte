@@ -79,7 +79,7 @@ console.log(`Your average is: ${gradesResult.average ?? "N/A"}`);
 
 ## 📖 Documentation
 
-For full instructions, configuration guides, and references, explore the **[docs directory](docs/)**.
+For full instructions, configuration guides, and references, explore the **[project wiki](https://github.com/Scolup/Linkdirecte/wiki)**.
 
 If you are building with AI, you can copy the [LLMs.md file](llms.md) and give it to your agent. It will understand how to use Linkdirecte.
 
