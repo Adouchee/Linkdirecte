@@ -1,4 +1,6 @@
-# 📅 Timetable (Emploi du Temps)
+<p align="center">
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Timetable&amp;subtitle=Learn+how+to+get+the+timetable+with+Linkdirecte.&amp;logo=lu%3ACalendar&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Timetable | Learn how to get the timetable with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Timetable&amp;subtitle=Learn+how+to+get+the+timetable+with+Linkdirecte.&amp;logo=lu%3ACalendar&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+</p>
 
 The Timetable module fetches, parses, and normalizes the student's calendar. It also allows you to retrieve a subscription URL for external calendar systems (Apple Calendar, Google Calendar, Outlook, etc.).
 
