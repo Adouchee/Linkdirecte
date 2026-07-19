@@ -112,6 +112,15 @@ Below is an example of the resolved `MessagesResult` payload returned by `getMes
         date: new Date("2026-03-12T14:20:00.000Z"),
         isRead: false,
         fromName: "M. le Proviseur",
+        from: {
+          id: 152,
+          lastName: "DUPONT",
+          firstName: "K.",
+          particule: "",
+          civility: "Mme",
+          role: "A",
+          blackList: false
+        },
         isAnswered: false,
         isTransferred: false,
         canAnswer: false
@@ -123,6 +132,15 @@ Below is an example of the resolved `MessagesResult` payload returned by `getMes
         date: new Date("2026-03-10T08:30:00.000Z"),
         isRead: true,
         fromName: "Mme. Dupont",
+        from: {
+          id: 131,
+          lastName: "DUPONT",
+          firstName: "Marie",
+          particule: "",
+          civility: "Mme",
+          role: "P",
+          blackList: false
+        },
         isAnswered: true,
         isTransferred: false,
         canAnswer: true
@@ -155,6 +173,15 @@ And below is an example of a single `MessageEntry` returned by `getMessage(id)`:
   date: new Date("2026-03-12T14:20:00.000Z"),
   isRead: true, // Marked as read upon opening
   fromName: "M. le Proviseur",
+  from: {
+    id: 152,
+    lastName: "DUPONT",
+    firstName: "K.",
+    particule: "",
+    civility: "Mme",
+    role: "A",
+    blackList: false
+  },
   isAnswered: false,
   isTransferred: false,
   canAnswer: false

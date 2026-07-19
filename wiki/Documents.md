@@ -21,13 +21,13 @@ const result = await getDocuments();
 const latestReportCard = result.grades?.[0];
 
 if (latestReportCard && latestReportCard.url) {
-  console.log(`Downloading report card: ${latestReportCard.name}...`);
+  console.log(`Downloading report card: ${latestReportCard.label}...`);
 
   // Download the file as an ArrayBuffer (default)
   const fileData = await download(latestReportCard.url);
 
   // Save it locally!
-  await writeFile(`./${latestReportCard.name}.pdf`, Buffer.from(fileData));
+  await writeFile(`./${latestReportCard.label}.pdf`, Buffer.from(fileData));
   console.log("Download complete!");
 } else {
   console.log("No report cards available to download.");
@@ -70,7 +70,7 @@ Below is an example of the resolved `DocumentsResult` payload returned by `getDo
   factures: [
     {
       id: 10485,
-      name: "Facture Scolarité Mars 2026",
+      label: "Facture Scolarité Mars 2026",
       date: new Date("2026-03-01T00:00:00.000Z"),
       size: 145000, // 145KB
       url: "https://api.ecoledirecte.com/v3/document.awp?id=10485",
@@ -82,7 +82,7 @@ Below is an example of the resolved `DocumentsResult` payload returned by `getDo
   grades: [
     {
       id: 10486,
-      name: "Bulletin du 1er Trimestre",
+      label: "Bulletin du 1er Trimestre",
       date: new Date("2026-02-15T00:00:00.000Z"),
       size: 250000, // 250KB
       url: "https://api.ecoledirecte.com/v3/document.awp?id=10486",
@@ -95,7 +95,7 @@ Below is an example of the resolved `DocumentsResult` payload returned by `getDo
   administratives: [
     {
       id: 10487,
-      name: "Fiche d'inscription 2026-2027",
+      label: "Fiche d'inscription 2026-2027",
       date: new Date("2026-03-10T00:00:00.000Z"),
       size: 412000,
       url: "https://api.ecoledirecte.com/v3/document.awp?id=10487",
@@ -133,7 +133,7 @@ Provides all the metadata you need to describe and download a specific document:
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `id` | `number` | Unique ID of the document. |
-| `name` | `string` | The title/name of the document (e.g., `"Bulletin du 1er Trimestre"`). |
+| `label` | `string` | The title/label of the document (e.g., `"Bulletin du 1er Trimestre"`). |
 | `date` | `Date` | The official publication date of this document. |
 | `subjectLabel` | `string` *(optional)* | Subject label if related to a specific class. |
 | `teacherName` | `string` *(optional)* | Teacher related to the document. |
