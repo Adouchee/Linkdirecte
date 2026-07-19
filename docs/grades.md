@@ -1,4 +1,6 @@
-# 🎓 Grades & Statistics
+<p align="center">
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Grades&amp;subtitle=Learn+how+to+get+grades+data+with+Linkdirecte.&amp;logo=lu%3AGraduationCap&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Grades | Learn how to get grades data with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Grades&amp;subtitle=Learn+how+to+get+grades+data+with+Linkdirecte.&amp;logo=lu%3AGraduationCap&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+</p>
 
 The Grades module provides deep, structured access to a student's grades, averages, and subject performance metrics. It transforms the flat EcoleDirecte grade log into a cohesive, organized map of subjects, complete with statistical calculations.
 
