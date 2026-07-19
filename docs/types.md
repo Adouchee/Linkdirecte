@@ -1,4 +1,6 @@
-# 🗂️ Complete Type Reference
+<p align="center">
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Types&amp;subtitle=Complete+type+reference.&amp;logo=lu%3ABookType&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Types | A complete type reference." src="https://shieldcn.dev/header/glow.svg?title=Types&amp;subtitle=Complete+type+reference.&amp;logo=lu%3ABookType&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+</p>
 
 This index gathers and explains all public TypeScript interfaces and data structures exported by Linkdirecte. Use this as a quick-lookup reference when building typed integrations or setting up custom applications!
 
