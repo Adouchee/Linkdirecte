@@ -141,6 +141,76 @@ async function refreshToken(): Promise<string>
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `LoginSuccess` payload returned upon a successful login:
+
+```typescript
+{
+  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzNDUsInVpZCI6IjY3ODkwIiwidXNlcm5hbWUiOiJqYW5lLmRvZSJ9...",
+  sessionId: "session_abc123xyz789",
+  user: {
+    loginId: 12345,
+    id: 12345,
+    uid: "student-uid-999",
+    identifiant: "jane.doe",
+    accountType: "E",
+    firstName: "Jane",
+    lastName: "Doe",
+    email: "jane.doe@scolup.edu",
+    schoolName: "Lycée Sainte-Marie",
+    main: true,
+    accessToken: "access-token-xyz-123",
+    profile: {
+      sexe: "F",
+      photoUrl: "https://api.ecoledirecte.com/v3/photo.awp?uid=student-uid-999",
+      classe: {
+        id: 456,
+        code: "TERM-G1",
+        label: "Terminale Générale 1"
+      }
+    },
+    modules: [
+      {
+        code: "NOTES",
+        enable: true,
+        badge: 0,
+        params: {}
+      },
+      {
+        code: "CAHIER_DE_TEXTES",
+        enable: true,
+        badge: 2,
+        params: {}
+      },
+      {
+        code: "MESSAGERIE",
+        enable: true,
+        badge: 5,
+        params: {}
+      }
+    ]
+  }
+}
+```
+
+If the login requires a 2FA challenge, the returned `LoginChallenge` object looks like this:
+
+```typescript
+{
+  type: "securityQuestion",
+  question: "What is your favorite animal?",
+  choices: [
+    "A) Dolphin",
+    "B) Lion",
+    "C) Eagle"
+  ],
+  answer: async (choiceIndexOrText) => { /* ... returns Promise<LoginSuccess> ... */ }
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `LoginResult`

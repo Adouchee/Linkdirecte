@@ -60,6 +60,113 @@ A promise that resolves to a unified `GradesResult` object.
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `GradesResult` payload returned by `getGrades()`:
+
+```typescript
+{
+  grades: [
+    {
+      value: "16.5",
+      outOf: "20",
+      coefficient: 1,
+      isLetter: false,
+      isTest: true,
+      date: new Date("2026-03-01T00:00:00.000Z"),
+      subjectCode: "MATH",
+      subjectLabel: "Mathématiques",
+      periodCode: "A001",
+      entryDate: new Date("2026-03-02T10:15:00.000Z"),
+      teacherName: "Mme. Dupont",
+      testType: "Devoir Écrit"
+    },
+    {
+      value: "14.0",
+      outOf: "20",
+      coefficient: 2,
+      isLetter: false,
+      isTest: true,
+      date: new Date("2026-02-15T00:00:00.000Z"),
+      subjectCode: "FRAN",
+      subjectLabel: "Français",
+      periodCode: "A001",
+      entryDate: new Date("2026-02-16T09:00:00.000Z"),
+      teacherName: "M. Martin",
+      testType: "Contrôle Continu"
+    }
+  ],
+  subjects: [
+    {
+      subjectCode: "MATH",
+      subjectLabel: "Mathématiques",
+      coefficient: 4,
+      grades: [
+        {
+          value: "16.5",
+          outOf: "20",
+          coefficient: 1,
+          isLetter: false,
+          isTest: true,
+          date: new Date("2026-03-01T00:00:00.000Z"),
+          subjectCode: "MATH",
+          subjectLabel: "Mathématiques",
+          periodCode: "A001",
+          entryDate: new Date("2026-03-02T10:15:00.000Z"),
+          teacherName: "Mme. Dupont"
+        }
+      ],
+      average: 16.5,
+      classAverage: 12.8,
+      teacherName: "Mme. Dupont"
+    },
+    {
+      subjectCode: "FRAN",
+      subjectLabel: "Français",
+      coefficient: 3,
+      grades: [
+        {
+          value: "14.0",
+          outOf: "20",
+          coefficient: 2,
+          isLetter: false,
+          isTest: true,
+          date: new Date("2026-02-15T00:00:00.000Z"),
+          subjectCode: "FRAN",
+          subjectLabel: "Français",
+          periodCode: "A001",
+          entryDate: new Date("2026-02-16T09:00:00.000Z"),
+          teacherName: "M. Martin"
+        }
+      ],
+      average: 14.0,
+      classAverage: 11.5,
+      teacherName: "M. Martin"
+    }
+  ],
+  averages: [
+    {
+      subjectCode: "MATH",
+      average: 16.5,
+      classAverage: 12.8
+    },
+    {
+      subjectCode: "FRAN",
+      average: 14.0,
+      classAverage: 11.5
+    }
+  ],
+  periods: [
+    {
+      code: "A001",
+      label: "Trimestre 1"
+    }
+  ]
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `GradesResult`

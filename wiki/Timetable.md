@@ -76,6 +76,46 @@ function getTimetableIcalUrl(): Promise<string>
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `TimetableResult` payload returned by `getTimetable()`:
+
+```typescript
+{
+  timetable: [
+    {
+      id: 998811,
+      subjectCode: "MATH",
+      subjectLabel: "Mathématiques",
+      teacherName: "Mme. Dupont",
+      room: "Salle 204",
+      group: "Groupe A",
+      startDate: new Date("2026-03-16T08:00:00.000Z"),
+      endDate: new Date("2026-03-16T09:55:00.000Z"),
+      isCancelled: false,
+      isDetention: false,
+      isExempted: false,
+      color: "#FF5733"
+    },
+    {
+      id: 998812,
+      subjectCode: "HIST",
+      subjectLabel: "Histoire-Géographie",
+      teacherName: "M. Bertrand",
+      room: "Salle 102",
+      startDate: new Date("2026-03-16T10:10:00.000Z"),
+      endDate: new Date("2026-03-16T12:00:00.000Z"),
+      isCancelled: true, // This class is cancelled!
+      isDetention: false,
+      isExempted: false,
+      color: "#33C1FF"
+    }
+  ]
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `TimetableResult`

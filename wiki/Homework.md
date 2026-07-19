@@ -96,6 +96,49 @@ If you have `offlineQueue: true` enabled in your global configuration, and the s
 
 ---
 
+## 📋 Example Response
+
+Below is an example of the resolved `HomeworkResult` payload returned by `getHomework()`:
+
+```typescript
+{
+  "2026-03-16": [
+    {
+      id: 55442,
+      subjectCode: "MATH",
+      subjectLabel: "Mathématiques",
+      teacherName: "Mme. Dupont",
+      givenOn: new Date("2026-03-10T00:00:00.000Z"),
+      forDate: new Date("2026-03-16T00:00:00.000Z"),
+      content: "<h3>Exercices 12 et 15 page 150</h3><p>Faire les exercices de géométrie dans le cahier.</p>",
+      isDone: true,
+      submitOnline: false,
+      documentsToDo: [
+        {
+          id: 112233,
+          label: "Consignes de géométrie.pdf",
+          url: "https://api.ecoledirecte.com/v3/document.awp?id=112233"
+        }
+      ]
+    },
+    {
+      id: 55443,
+      subjectCode: "ANGL",
+      subjectLabel: "Anglais",
+      teacherName: "Mr. Smith",
+      givenOn: new Date("2026-03-11T00:00:00.000Z"),
+      forDate: new Date("2026-03-16T00:00:00.000Z"),
+      content: "Read chapter 3 of the book and prepare 3 discussion questions.",
+      isDone: false,
+      submitOnline: true,
+      documentsToDo: []
+    }
+  ]
+}
+```
+
+---
+
 ## 🗂️ Type Definitions
 
 ### `HomeworkResult`
