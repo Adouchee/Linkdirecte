@@ -11,27 +11,27 @@ Welcome to the official, exhaustive guide for **Linkdirecte**! Linkdirecte is _t
 ## 📖 Table of Contents
 
 ### Getting Started
-- [🔑 Authentication](auth.md) | Learn how to log in, handle Two-Factor Authentication (2FA) challenges, and manage active sessions.
-- [⚙️ Core Configurations & Storage](core.md) | Adjust network behaviors, set up persistent storage, proxy configuration, handle downloads, and configure encryption passkeys.
+- [🔑 Authentication](Authentication.md) | Learn how to log in, handle Two-Factor Authentication (2FA) challenges, and manage active sessions.
+- [⚙️ Core Configurations & Storage](Configuration.md) | Adjust network behaviors, set up persistent storage, proxy configuration, handle downloads, and configure encryption passkeys.
 
 ### Academic Modules
-- [🎓 Grades & Statistics](grades.md) | Retrieve student grades, term periods, and computed averages.
-- [📅 Timetable](timetable.md) | Fetch class schedules or retrieve third-party calendar (iCal) URLs.
-- [📚 Homework](homework.md) | Browse Cahier de Texte assignments, read detailed HTML text, download attachments, and mark homework as done.
+- [🎓 Grades & Statistics](Grades.md) | Retrieve student grades, term periods, and computed averages.
+- [📅 Timetable](Timetable.md) | Fetch class schedules or retrieve third-party calendar (iCal) URLs.
+- [📚 Homework](Homework.md) | Browse Cahier de Texte assignments, read detailed HTML text, download attachments, and mark homework as done.
 
 ### Communication & School Life
-- [✉️ Messages](messages.md) | Connect to the mailbox, browse custom folders, retrieve attachment details, and reply to teachers.
-- [🎒 Attendance & School Life](attendance.md) | Track absences, late arrivals, and school punishments.
-- [📅 Timeline & Analytics](timeline.md) | Retrieve student activities or perform statistical correlation passes.
+- [✉️ Messages](Messages.md) | Connect to the mailbox, browse custom folders, retrieve attachment details, and reply to teachers.
+- [🎒 Attendance & School Life](Attendance.md) | Track absences, late arrivals, and school punishments.
+- [📅 Timeline & Analytics](Timeline.md) | Retrieve student activities or perform statistical correlation passes.
 
 ### Additional Modules
-- [☁️ Cloud Storage](cloud.md) | Work with the student's personal cloud space ("Porte-documents"), manage folders, or delete files.
-- [📄 Official Documents](documents.md) | Download administrative paperwork, invoices, and quarterly report cards.
-- [📝 Forms & QCMs](forms.md) | Fetch assigned quizzes, inspect questions, and submit answer choices.
-- [🔔 Event Polling](listen.md) | Hook up real-time event listeners for grades, messages, or activities.
+- [☁️ Cloud Storage](Cloud.md) | Work with the student's personal cloud space ("Porte-documents"), manage folders, or delete files.
+- [📄 Official Documents](Documents.md) | Download administrative paperwork, invoices, and quarterly report cards.
+- [📝 Forms & QCMs](QCMs.md) | Fetch assigned quizzes, inspect questions, and submit answer choices.
+- [🔔 Event Polling](Event%20listen.md) | Hook up real-time event listeners for grades, messages, or activities.
 
 ### Type Reference
-- [🗂️ Complete Type Reference](types.md) | Quick reference for public TypeScript interfaces and data models.
+- [🗂️ Complete Type Reference](Types.md) | Quick reference for public TypeScript interfaces and data models.
 
 ---
 
