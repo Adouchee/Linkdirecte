@@ -52,7 +52,6 @@ Retrieves a chronologically ordered list of events relevant to the logged-in stu
 
 ```typescript
 function getTimeline(options?: {
-  raw?: boolean;
   explain?: boolean;
 }): Promise<TimelineEntry[]>
 ```
@@ -65,7 +64,6 @@ Fetches general school notices, bulletins, and shared announcements. Linkdirecte
 
 ```typescript
 function getCommonTimeline(options?: {
-  raw?: boolean;
   explain?: boolean;
 }): Promise<TimelineEntry[]>
 ```

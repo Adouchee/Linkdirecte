@@ -44,7 +44,6 @@ Retrieves a list of all assigned questionnaires/QCMs.
 
 ```typescript
 function getQcms(options?: {
-  raw?: boolean;
   explain?: boolean;
 }): Promise<QcmsResult>
 ```
@@ -59,7 +58,7 @@ Retrieves the question set and candidate choices for a specific QCM.
 function getQcmDetail(
   idQcm: number,
   idAssociation: number,
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<QcmDetailResult>
 ```
 
@@ -75,7 +74,7 @@ function updateQcmStatus(
   idAssociation: number,
   idParticipant: number,
   action: "updateStartDate" | "updateEndDate",
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 
@@ -98,7 +97,7 @@ function submitQcmAnswer(
     idQuestion: number;
     choiceIds: number[];
   },
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 

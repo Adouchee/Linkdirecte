@@ -20,8 +20,8 @@ for (const [date, assignments] of Object.entries(calendar)) {
   console.log(`\n📅 Assignments for ${date}:`);
 
   assignments.forEach(task => {
-    const status = task.isDone ? "✅ DONE" : "❌ TO DO";
-    console.log(`- [${status}] [${task.subjectLabel}] ${task.content || "Read class notes."}`);
+    const status = task.effectue === "1" || task.effectue === true ? "✅ DONE" : "❌ TO DO";
+    console.log(`- [${status}] [${task.matiere}] ${task.aFaire?.contenu || "Read class notes."}`);
   });
 }
 ```
@@ -37,7 +37,6 @@ Fetches a calendar index of homework due over the next few weeks.
 ```typescript
 function getHomework(options?: {
   withContent?: boolean;
-  raw?: boolean;
   explain?: boolean;
 }): Promise<HomeworkResult>
 ```
@@ -46,7 +45,6 @@ function getHomework(options?: {
 
 - `options` *(optional)*:
   - `withContent` *(boolean)*: If set to `true`, the SDK will make background queries to resolve detailed HTML descriptions and attachments for each date. Defaults to `false`.
-  - `raw` *(boolean)*: Set to `true` to disable all custom translations.
   - `explain` *(boolean)*: Includes detailed network debugging inside `_debug`.
 
 #### Returns
@@ -62,7 +60,7 @@ Loads detailed descriptions and resources for a specific day.
 ```typescript
 function getHomeworkForDate(
   date: string | Date,
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<HomeworkEntry[]>
 ```
 
@@ -73,8 +71,8 @@ import { getHomeworkForDate } from "linkdirecte";
 
 const assignments = await getHomeworkForDate("2025-09-15");
 assignments.forEach(task => {
-  console.log(`Teacher: ${task.teacherName ?? "Unknown"}`);
-  console.log(`Content (HTML): ${task.content}`);
+  console.log(`Teacher: ${task.nomProf ?? "Unknown"}`);
+  console.log(`Content (HTML): ${task.aFaire?.contenu}`);
 });
 ```
 
@@ -87,12 +85,35 @@ Updates the state of one or more homework assignments to completed.
 ```typescript
 function markAsDone(
   homeworkIds: number[],
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<MarkAsDoneResult>
 ```
 
 #### Resilience (Offline Syncing!)
 If you have `offlineQueue: true` enabled in your global configuration, and the student's device is currently offline, calling `markAsDone` won't throw an error. Instead, Linkdirecte will **automatically save the request** in local storage and queue it up. You can synchronize it later by calling `offlineQueue.flush()`.
+
+---
+
+### `sendHomeworkComment`
+
+Post a comment under a homework assignment or a session content.
+
+```typescript
+function sendHomeworkComment(
+  idContenu: number,
+  message: string,
+  options?: { explain?: boolean }
+): Promise<{ id: number }>
+```
+
+#### Example
+
+```typescript
+import { sendHomeworkComment } from "linkdirecte";
+
+const result = await sendHomeworkComment(55442, "Here is my comment on the homework");
+console.log(`Comment posted successfully with ID: ${result.id}`);
+```
 
 ---
 
@@ -104,34 +125,27 @@ Below is an example of the resolved `HomeworkResult` payload returned by `getHom
 {
   "2026-03-16": [
     {
-      id: 55442,
-      subjectCode: "MATH",
-      subjectLabel: "Mathématiques",
-      teacherName: "Mme. Dupont",
-      givenOn: new Date("2026-03-10T00:00:00.000Z"),
-      forDate: new Date("2026-03-16T00:00:00.000Z"),
-      content: "<h3>Exercices 12 et 15 page 150</h3><p>Faire les exercices de géométrie dans le cahier.</p>",
-      isDone: true,
-      submitOnline: false,
-      documentsToDo: [
-        {
-          id: 112233,
-          label: "Consignes de géométrie.pdf",
-          url: "https://api.ecoledirecte.com/v3/document.awp?id=112233"
-        }
-      ]
-    },
-    {
-      id: 55443,
-      subjectCode: "ANGL",
-      subjectLabel: "Anglais",
-      teacherName: "Mr. Smith",
-      givenOn: new Date("2026-03-11T00:00:00.000Z"),
-      forDate: new Date("2026-03-16T00:00:00.000Z"),
-      content: "Read chapter 3 of the book and prepare 3 discussion questions.",
-      isDone: false,
-      submitOnline: true,
-      documentsToDo: []
+      idDevoir: 55442,
+      codeMatiere: "MATH",
+      matiere: "Mathématiques",
+      nomProf: "Mme. Dupont",
+      donneLe: new Date("2026-03-10T00:00:00.000Z"),
+      effectue: "1",
+      rendreEnLigne: false,
+      aFaire: {
+        idDevoir: 55442,
+        contenu: "<h3>Exercices 12 et 15 page 150</h3><p>Faire les exercices de géométrie dans le cahier.</p>",
+        rendreEnLigne: false,
+        donneLe: "2026-03-10",
+        effectue: true,
+        documents: [
+          {
+            id: 112233,
+            libelle: "Consignes de géométrie.pdf",
+            taille: 12345
+          }
+        ]
+      }
     }
   ]
 }
@@ -153,16 +167,13 @@ interface HomeworkResult {
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
-| `id` | `number` | Unique identifier for the assignment. |
-| `subjectCode` | `string` | Code identifier of the subject. |
-| `subjectLabel` | `string` | Readable subject name. |
-| `teacherName` | `string` *(optional)* | Name of the teacher who assigned the work. |
-| `givenOn` | `Date` | The date the homework was originally assigned. |
-| `forDate` | `Date` | The deadline date when this homework is due. |
-| `content` | `string` | Base64-decoded HTML containing instructions from the teacher. |
-| `isDone` | `boolean` | True if the student has marked this assignment as complete. |
-| `submitOnline` | `boolean` *(optional)* | Indicates if the assignment must be submitted digitally. |
-| `documentsToDo` | `Array<{ id, label, url? }>` *(optional)* | Attachments or files linked to this homework. |
+| `idDevoir` | `number` | Unique identifier for the assignment. |
+| `codeMatiere` | `string` | Code identifier of the subject. |
+| `matiere` | `string` | Readable subject name. |
+| `nomProf` | `string` *(optional)* | Name of the teacher who assigned the work. |
+| `donneLe` | `Date` | The date the homework was originally assigned. |
+| `effectue` | `string` \| `boolean` | Indicates if marked by the student as complete. |
+| `rendreEnLigne` | `boolean` *(optional)* | Indicates if the assignment must be submitted digitally. |
 
 ### `MarkAsDoneResult`
 

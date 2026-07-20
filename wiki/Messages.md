@@ -47,7 +47,6 @@ function getMessages(options?: GetMessagesOptions): Promise<MessagesResult>
 - `options` *(optional)*:
   - `folderId` *(number)*: Pass a folder ID to retrieve messages from custom archives or folders.
   - `withContent` *(boolean)*: If set to `true`, automatically makes individual parallel queries to retrieve the content bodies for all returned messages. Defaults to `false`.
-  - `raw` *(boolean)*: Returns original unmodified JSON.
   - `explain` *(boolean)*: Adds HTTP caching and retry diagnostics to `_debug`.
 
 ---
@@ -59,7 +58,7 @@ Loads the detailed envelope and content body for a single message.
 ```typescript
 function getMessage(
   id: number,
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<MessageEntry>
 ```
 
@@ -74,7 +73,7 @@ Composes and sends a new message.
 ```typescript
 function sendMessage(
   data: SendMessageData,
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 

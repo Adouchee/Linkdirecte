@@ -42,7 +42,6 @@ Fetches grades and statistics for either the current school period or a specific
 ```typescript
 function getGrades(options?: {
   periodId?: string;
-  raw?: boolean;
   explain?: boolean;
 }): Promise<GradesResult>
 ```
@@ -51,7 +50,6 @@ function getGrades(options?: {
 
 - `options` *(optional)*:
   - `periodId` *(string)*: Focuses the query on a specific school term or period (e.g. `"A001"`). If not specified, returns grades across all available periods for the current year.
-  - `raw` *(boolean)*: Set to `true` to disable all key renaming and type conversions, returning the raw API response as is.
   - `explain` *(boolean)*: Includes networking and cache statistics in a `_debug` property.
 
 #### Returns

@@ -44,7 +44,6 @@ Fetches categorized folders of files made available to the student.
 
 ```typescript
 function getDocuments(options?: {
-  raw?: boolean;
   explain?: boolean;
 }): Promise<DocumentsResult>
 ```
@@ -52,7 +51,6 @@ function getDocuments(options?: {
 #### Parameters
 
 - `options` *(optional)*:
-  - `raw` *(boolean)*: Returns the original raw response from the server if `true`.
   - `explain` *(boolean)*: Includes debugging parameters under `_debug`.
 
 #### Returns

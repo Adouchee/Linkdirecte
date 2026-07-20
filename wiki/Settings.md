@@ -38,7 +38,6 @@ Fetches user login attributes and profile settings.
 
 ```typescript
 function getSettings(options?: {
-  raw?: boolean;
   explain?: boolean;
 }): Promise<AccountSettings>
 ```
@@ -59,7 +58,7 @@ function updateSettings(
     nouveauMotDePasse?: string;     // French alias for new password
     identifiant?: string;           // Username identifier
   },
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<AccountSettings>
 ```
 
@@ -74,7 +73,7 @@ Enables or disables visual accessibility enhancements (e.g. high contrast or enl
 ```typescript
 function updateAccessibility(
   enabled: boolean,
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 

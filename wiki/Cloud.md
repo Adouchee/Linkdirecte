@@ -43,7 +43,6 @@ function getCloud(options?: GetCloudOptions): Promise<CloudEntry[]>
 
 - `options` *(optional)*:
   - `depth` *(number)*: How many folders deep the SDK should scan and build children arrays for. Defaults to `3`.
-  - `raw` *(boolean)*: Returns the original raw response from the server if `true`.
   - `explain` *(boolean)*: Includes request dumps, logs, and caching details in `_debug`.
 
 ---
@@ -56,7 +55,7 @@ Creates a new folder under a parent directory.
 function createFolder(
   name: string,
   parentNode: CloudNode,
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<CloudNode>
 ```
 
@@ -64,7 +63,7 @@ function createFolder(
 
 - `name` *(string)*: The name for your new folder.
 - `parentNode` *(CloudNode)*: The folder node where your new folder should be created.
-- `options` *(optional)*: `{ raw?: boolean, explain?: boolean }`.
+- `options` *(optional)*: `{, explain?: boolean }`.
 
 #### Example
 
@@ -89,14 +88,14 @@ Moves files or folders to the Recycle Bin / Trash.
 ```typescript
 function deleteNodes(
   nodes: CloudNode[],
-  options?: { raw?: boolean; explain?: boolean }
+  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 
 #### Parameters
 
 - `nodes` *(CloudNode[])*: An array of file or folder nodes to delete.
-- `options` *(optional)*: `{ raw?: boolean, explain?: boolean }`.
+- `options` *(optional)*: `{, explain?: boolean }`.
 
 #### Example
 

@@ -39,7 +39,6 @@ Fetches the student's full attendance history, including lateness and punishment
 
 ```typescript
 function getAttendance(options?: {
-  raw?: boolean;
   explain?: boolean;
 }): Promise<AttendanceResult>
 ```
@@ -47,7 +46,6 @@ function getAttendance(options?: {
 #### Parameters
 
 - `options` *(optional)*:
-  - `raw` *(boolean)*: If set to `true`, Linkdirecte returns the raw, unmodified API response directly from EcoleDirecte.
   - `explain` *(boolean)*: If set to `true`, includes a special `_debug` property on the result containing detailed HTTP and cache logs.
 
 #### Returns
