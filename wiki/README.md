@@ -2,34 +2,34 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Docs&amp;subtitle=Learn+how+to+use+Linkdirecte.&amp;logo=lu%3ABook&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Docs | Learn how to use Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Docs&amp;subtitle=Learn+how+to+use+Linkdirecte.&amp;logo=lu%3ABook&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-# 📚 Linkdirecte Documentation
-
-Welcome to the official, exhaustive guide for **Linkdirecte**! Linkdirecte is _the best_ SDK for interacting with EcoleDirecte _(approved and used by Scolup!)_.
+Welcome to the guide for **Linkdirecte**! Linkdirecte is _the best_ SDK for interacting with EcoleDirecte _(approved and used by Scolup!)_.
 
 ---
 
 ## 📖 Table of Contents
 
 ### Getting Started
-- [🔑 Authentication](Authentication.md) | Learn how to log in, handle Two-Factor Authentication (2FA) challenges, and manage active sessions.
-- [⚙️ Core Configurations & Storage](Configuration.md) | Adjust network behaviors, set up persistent storage, proxy configuration, handle downloads, and configure encryption passkeys.
+- [🔑 Authentication](Authentication.md) | Learn how to log in, handle 2FA, and manage active sessions.
+- [⚙️ Configuration](Configuration.md) | Adjust network behaviors, set up persistent storage, proxy configuration, handle downloads, and configure encryption passkeys.
 
 ### Academic Modules
-- [🎓 Grades & Statistics](Grades.md) | Retrieve student grades, term periods, and computed averages.
-- [📅 Timetable](Timetable.md) | Fetch class schedules or retrieve third-party calendar (iCal) URLs.
-- [📚 Homework](Homework.md) | Browse Cahier de Texte assignments, read detailed HTML text, download attachments, and mark homework as done.
+- [🎓 Grades](Grades.md) | Retrieve student grades, competencies, subjects and periods.
+- [📅 Timetable](Timetable.md) | Fetch schedules.
+- [📚 Homework](Homework.md) | Browse homework, get session content, and mark homework as done.
 
 ### Communication & School Life
-- [✉️ Messages](Messages.md) | Connect to the mailbox, browse custom folders, retrieve attachment details, and reply to teachers.
-- [🎒 Attendance & School Life](Attendance.md) | Track absences, late arrivals, and school punishments.
-- [📅 Timeline & Analytics](Timeline.md) | Retrieve student activities or perform statistical correlation passes.
+- [✉️ Messages](Messages.md) | Get and write messages.
+- [🎒 Attendance](Attendance.md) | Track absences, late arrivals, and school punishments.
+- [📅 Timeline & post-its](Timeline.md) | Get the latest events and post-its.
 
 ### Additional Modules
-- [☁️ Cloud Storage](Cloud.md) | Work with the student's personal cloud space ("Porte-documents"), manage folders, or delete files.
-- [📄 Official Documents](Documents.md) | Download administrative paperwork, invoices, and quarterly report cards.
-- [📝 Forms & QCMs](QCMs.md) | Fetch assigned quizzes, inspect questions, and submit response choices.
-- [🔔 Event Polling](Event%20listen.md) | Hook up real-time event listeners for grades, messages, or activities.
+- [☁️ Cloud](Cloud.md) | Work with the cloud space, manage folders, or delete files.
+- [📄 Documents](Documents.md) | Download administrative docs, invoices, and trimester reports.
+- [📝 QCMs](QCMs.md) | Fetch assigned quizzes, inspect questions, and submit response choices.
+- [🔔 Event listening](Event%20listen.md) | Hook up real-time event listeners for grades, messages, or activities.
 
+> [!NOTE]
+> We won't document responses here, but you can check out [Docsdirecte](https://docsdirecte.scolup.qzz.io) ([for LLMs here](https://docs.directe.scolup.qzz.io)) for a full doc of EcoleDirecte's responses. _Note that dates are normalized by the SDK and you don't have to handle Base64 encoding/decoding._
 
 ---
 
