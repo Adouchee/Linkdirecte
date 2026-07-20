@@ -21,11 +21,11 @@ const schedule = await getTimetable({
 console.log(`Loaded ${schedule.timetable.length} timetable events.`);
 
 schedule.timetable.forEach(classSession => {
-  const status = classSession.isCancelled ? "❌ CANCELLED" : "✅ ACTIVE";
-  console.log(`\n[${status}] Subject: ${classSession.libelleMatiere}`);
-  console.log(`  Time: ${classSession.startDate.toLocaleTimeString()} - ${classSession.endDate.toLocaleTimeString()}`);
-  console.log(`  Room: ${classSession.room || "No room assigned"}`);
-  console.log(`  Teacher: ${classSession.nomProf || "Unspecified teacher"}`);
+  const status = classSession.isAnnule ? "❌ CANCELLED" : "✅ ACTIVE";
+  console.log(`\n[${status}] Subject: ${classSession.matiere}`);
+  console.log(`  Time: ${classSession.start_date.toLocaleTimeString()} - ${classSession.end_date.toLocaleTimeString()}`);
+  console.log(`  Room: ${classSession.salle || "No room assigned"}`);
+  console.log(`  Teacher: ${classSession.prof || "Unspecified teacher"}`);
 });
 ```
 
@@ -59,7 +59,7 @@ function getTimetable(options?: {
 
 - `options` *(optional)*:
   - `startDate` *(string | Date)*: The beginning of the timetable window. Can be a standard JavaScript `Date` object or an ISO-style date string (`"YYYY-MM-DD"`). Defaults to today.
-  - `endDate` *(string | Date)*: The end of the timetable window. Defaults to the same valeur as `startDate`.
+  - `endDate` *(string | Date)*: The end of the timetable window. Defaults to the same value as `startDate`.
   - `explain` *(boolean)*: Includes networking and caching metrics under a `_debug` property.
 
 ---
@@ -86,19 +86,17 @@ interface TimetableResult {
 
 ### `TimetableEntry`
 
-Provides a standardized structure for school calendar classes:
+The properties of `TimetableEntry` are returned as raw EcoleDirecte API keys (no translation is performed by the SDK):
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `id` | `number` | Unique ID of the schedule slot. |
 | `codeMatiere` | `string` | Short identifying code of the subject. |
-| `libelleMatiere` | `string` | Full display name of the subject (e.g. `"Mathématiques"`). |
-| `startDate` | `Date` | Start date and time of the class. |
-| `endDate` | `Date` | End date and time of the class. |
-| `nomProf` | `string` *(optional)* | Name of the teacher hosting this class session. |
-| `room` | `string` *(optional)* | Classroom label or number. |
-| `group` | `string` *(optional)* | Specific classroom group assigned. |
-| `isCancelled` | `boolean` *(optional)* | `true` if the session has been cancelled. |
-| `isDetention` | `boolean` *(optional)* | `true` if this session represents a detention period. |
-| `isExempted` | `boolean` *(optional)* | `true` if the student is exempted from attending this class. |
+| `matiere` | `string` | Full display name of the subject (e.g. `"Mathématiques"`). (raw key) |
+| `start_date` | `Date` | Start date and time of the class. (raw key) |
+| `end_date` | `Date` | End date and time of the class. (raw key) |
+| `prof` | `string` *(optional)* | Name of the teacher hosting this class session. (raw key) |
+| `salle` | `string` *(optional)* | Classroom label or number. (raw key) |
+| `groupe` | `string` *(optional)* | Specific classroom group assigned. (raw key) |
+| `isAnnule` | `boolean` *(optional)* | `true` if the session has been cancelled. (raw key) |
 | `color` | `string` *(optional)* | Calendar color hex code (provided by the school's workspace). |

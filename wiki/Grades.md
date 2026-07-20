@@ -2,32 +2,34 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Grades&amp;subtitle=Learn+how+to+get+grades+data+with+Linkdirecte.&amp;logo=lu%3AGraduationCap&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Grades | Learn how to get grades data with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Grades&amp;subtitle=Learn+how+to+get+grades+data+with+Linkdirecte.&amp;logo=lu%3AGraduationCap&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The Grades module provides deep, structured access to a student's grades, averages, and subject performance metrics. It transforms the flat EcoleDirecte grade log into a cohesive, organized map of subjects, complete with statistical calculations.
+The Grades module provides access to a student's grades, averages, and subject performance metrics. It retrieves the data directly from EcoleDirecte, returning the raw structured grade entries and term/period details.
 
 ---
 
 ## 🚀 Getting Started
 
-Here's how to fetch your latest grades and output your average for each subject:
+Here's how to fetch your latest grades and output them grouped by subject:
 
 ```typescript
 import { getGrades } from "linkdirecte";
 
 const result = await getGrades();
 
-console.log(`Successfully loaded ${result.grades.length} grades!`);
+console.log(`Successfully loaded ${result.notes.length} grades!`);
 
-result.subjects.forEach(subject => {
-  console.log(`--- ${subject.libelleMatiere} ---`);
-  console.log(`Student Average: ${subject.average ?? "N/A"}`);
-  console.log(`Class Average: ${subject.classAverage ?? "N/A"}`);
+// Group grades by subject manually using raw keys
+const gradesBySubject = new Map<string, typeof result.notes>();
+for (const grade of result.notes) {
+  const list = gradesBySubject.get(grade.libelleMatiere) || [];
+  list.push(grade);
+  gradesBySubject.set(grade.libelleMatiere, list);
+}
 
-  if (subject.grades.length > 0) {
-    console.log("Recent Grades:");
-    subject.grades.slice(0, 3).forEach(grade => {
-      console.log(`  • ${grade.valeur}/${grade.noteSur} (Coeff: ${grade.coef})`);
-    });
-  }
+gradesBySubject.forEach((grades, subjectName) => {
+  console.log(`--- ${subjectName} ---`);
+  grades.forEach(grade => {
+    console.log(`  • ${grade.valeur}/${grade.noteSur} (Coeff: ${grade.coef})`);
+  });
 });
 ```
 
@@ -54,7 +56,7 @@ function getGrades(options?: {
 
 #### Returns
 
-A promise that resolves to a unified `GradesResult` object.
+A promise that resolves to a `GradesResult` object.
 
 ---
 
@@ -64,16 +66,12 @@ A promise that resolves to a unified `GradesResult` object.
 
 ```typescript
 interface GradesResult {
-  grades: GradeEntry[];               // Flat list of every single grade
-  subjects: SubjectEntry[];           // Grades grouped by subject with computed averages
-  averages?: Array<{                  // Overall statistical summaries
-    codeMatiere: string;
-    average: number;
-    classAverage?: number;
-  }>;
-  periods?: Array<{                  // List of semesters or terms found
-    code: string;
-    label: string;
+  notes: GradeEntry[];               // Flat list of every single grade
+  periodes?: Array<{                 // List of semesters or terms found
+    idPeriode: string;
+    codePeriode: string;
+    periode: string;
+    annuel: boolean;
   }>;
 }
 ```
@@ -82,33 +80,16 @@ interface GradesResult {
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
-| `valeur` | `string` | The grade valeur (e.g. `"18.5"`, or `"Abs"` for absent). |
+| `valeur` | `string` | The grade value (e.g. `"18.5"`, or `"Abs"` for absent). |
 | `noteSur` | `string` | The scale of the grade (e.g. `"20"`). |
-| `coef` | `number` | Weight of this grade in overall averages. |
+| `coef` | `string` | Weight of this grade in overall averages. |
 | `enLettre` | `boolean` | `true` if this grade is marked with a letter grade (like A, B, C) instead of a number. |
-| `interrogation` | `boolean` | Indicates whether the entry represents a formal test. |
 | `date` | `Date` | The date when the test/assignment was taken. |
 | `codeMatiere` | `string` | Unique code of the subject. |
 | `libelleMatiere` | `string` | The title of the subject (e.g., `"Mathématiques"`). |
-| `periodCode` | `string` | The term/period this grade belongs to. |
-| `entryDate` | `Date` | The exact day the grade was posted online. |
-| `nomProf` | `string` *(optional)* | Name of the teacher who graded this test. |
-| `testType` | `string` *(optional)* | Type category of the exam. |
-| `subSubjectCode` | `string` *(optional)* | Sub-category code. |
-| `subSubjectLabel` | `string` *(optional)* | Sub-category label. |
-
-### `SubjectEntry`
-
-Grouped summary of performance for a specific class:
-
-```typescript
-interface SubjectEntry {
-  codeMatiere: string;               // Unique subject code
-  libelleMatiere: string;              // Name of the class
-  coef: number;               // Subject weight
-  grades: GradeEntry[];              // Array of grades within this subject
-  average?: number;                  // Computed average for the active student
-  classAverage?: number;             // Class average for comparison
-  nomProf?: string;              // Name of the main teacher
-}
-```
+| `codePeriode` | `string` | The term/period code this grade belongs to. |
+| `dateSaisie` | `Date` | The exact day the grade was posted online. |
+| `commentaire` | `string` *(optional)* | Teacher comments regarding the grade. |
+| `typeDevoir` | `string` *(optional)* | Type category of the exam. |
+| `codeSousMatiere` | `string` *(optional)* | Sub-category code. |
+| `libelleSousMatiere` | `string` *(optional)* | Sub-category label. |

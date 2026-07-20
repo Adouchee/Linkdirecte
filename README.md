@@ -58,7 +58,9 @@ const result = await login("your_username", "your_password", {
   }
 });
 
-console.log(`Success! Logged in as ${result.user.firstName} ${result.user.lastName}`);
+if ("user" in result) {
+  console.log(`Success! Logged in as ${result.user.prenom} ${result.user.nom}`);
+}
 ```
 
 ### 3. Fetch Student Data
@@ -70,8 +72,10 @@ import { getGrades } from "linkdirecte";
 
 const gradesResult = await getGrades();
 
-console.log(`Loaded ${gradesResult.grades.length} grades!`);
-console.log(`Your average is: ${gradesResult.average ?? "N/A"}`);
+console.log(`Loaded ${gradesResult.notes.length} grades!`);
+if (gradesResult.notes.length > 0) {
+  console.log(`Latest grade: ${gradesResult.notes[0].valeur}/${gradesResult.notes[0].noteSur}`);
+}
 ```
 
 ---

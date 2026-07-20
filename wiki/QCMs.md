@@ -2,7 +2,7 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=QCMs&amp;subtitle=Learn+how+to+get+QCM+data+with+Linkdirecte.&amp;logo=lu%3AMailQuestion&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="QCMs | Learn how to get QCM data with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=QCMs&amp;subtitle=Learn+how+to+get+QCM+data+with+Linkdirecte.&amp;logo=lu%3AMailQuestion&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The Forms module manages online assessments, questionnaires, and multi-choice quizzes (QCMs) assigned to students by teachers.
+The Forms/QCMs module manages online assessments, questionnaires, and multi-choice quizzes (QCMs) assigned to students by teachers.
 
 ---
 
@@ -18,15 +18,15 @@ const result = await getQcms();
 const activeQuiz = result.associations?.[0];
 
 if (activeQuiz) {
-  console.log(`Let's work on: ${activeQuiz.title || "Untitled Quiz"}`);
+  console.log(`Let's work on: ${activeQuiz.titre || "Untitled Quiz"}`);
 
   // 2. Fetch questions for this quiz
-  const details = await getQcmDetail(activeQuiz.qcmId, activeQuiz.id);
+  const details = await getQcmDetail(activeQuiz.idQcm, activeQuiz.id);
 
   details.questions.forEach((question, index) => {
-    console.log(`Question ${index + 1}: ${question.label}`);
+    console.log(`Question ${index + 1}: ${question.libelle}`);
     question.choices.forEach(choice => {
-      console.log(`  [ ] ID: ${choice.id} | ${choice.label}`);
+      console.log(`  [ ] ID: ${choice.id} | ${choice.libelle}`);
     });
   });
 } else {
@@ -120,8 +120,8 @@ interface QcmsResult {
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `id` | `number` | The association ID. |
-| `qcmId` | `number` | The questionnaire ID. |
-| `title` | `string` *(optional)* | Title of the test. |
+| `idQcm` | `number` | The questionnaire ID. (raw key) |
+| `titre` | `string` *(optional)* | Title of the test. (raw key) |
 | `libelleMatiere` | `string` *(optional)* | Subject label. |
 | `nomProf` | `string` *(optional)* | Teacher who assigned the QCM. |
 | `date` | `Date` *(optional)* | The date when the quiz was assigned. |
@@ -131,11 +131,11 @@ interface QcmsResult {
 
 ```typescript
 interface QcmDetailResult {
-  qcmId: number;
+  idQcm: number;
   questions: Array<{
     id: number;
-    label: string;
-    choices: Array<{ id: number; label: string }>;
+    libelle: string; // (raw key)
+    choices: Array<{ id: number; libelle: string }>; // (raw key)
   }>;
 }
 ```

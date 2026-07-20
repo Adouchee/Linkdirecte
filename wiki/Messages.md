@@ -15,7 +15,7 @@ import { getMessages, getMessage } from "linkdirecte";
 
 // Fetch the inbox
 const inbox = await getMessages();
-const unreadEmails = inbox.messages?.received?.filter(msg => !msg.isRead) ?? [];
+const unreadEmails = inbox.messages?.received?.filter(msg => !msg.read) ?? [];
 
 console.log(`You have ${unreadEmails.length} unread message(s).`);
 
@@ -36,7 +36,7 @@ if (unreadEmails.length > 0) {
 
 ### `getMessages`
 
-Retrieves a simplified directory of messages.
+Retrieves a directory of messages.
 
 ```typescript
 function getMessages(options?: GetMessagesOptions): Promise<MessagesResult>
@@ -118,11 +118,11 @@ interface MessagesResult {
 | `id` | `number` | Unique ID of the message. |
 | `subject` | `string` | Subject header of the email. |
 | `date` | `Date` | Date and time the email was received/sent. |
-| `isRead` | `boolean` | `true` if the message has been read. |
+| `read` | `boolean` | `true` if the message has been read. |
 | `content` | `string` *(optional)* | Fully decoded HTML or text of the message body (available when fetching via `getMessage` or `withContent: true`). |
 | `fromName` | `string` *(optional)* | Readable name of the sender. |
-| `isAnswered` | `boolean` *(optional)* | `true` if this message has already been replied to. |
-| `isTransferred` | `boolean` *(optional)* | `true` if the message was forwarded. |
+| `answered` | `boolean` *(optional)* | `true` if this message has already been replied to. |
+| `transferred` | `boolean` *(optional)* | `true` if the message was forwarded. |
 | `canAnswer` | `boolean` *(optional)* | Whether replies are permitted for this message. |
 
 ### `SendMessageData`

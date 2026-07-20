@@ -27,7 +27,7 @@ Welcome to the official, exhaustive guide for **Linkdirecte**! Linkdirecte is _t
 ### Additional Modules
 - [☁️ Cloud Storage](Cloud.md) | Work with the student's personal cloud space ("Porte-documents"), manage folders, or delete files.
 - [📄 Official Documents](Documents.md) | Download administrative paperwork, invoices, and quarterly report cards.
-- [📝 Forms & QCMs](QCMs.md) | Fetch assigned quizzes, inspect questions, and submit reponse choices.
+- [📝 Forms & QCMs](QCMs.md) | Fetch assigned quizzes, inspect questions, and submit response choices.
 - [🔔 Event Polling](Event%20listen.md) | Hook up real-time event listeners for grades, messages, or activities.
 
 
@@ -92,11 +92,11 @@ if ("question" in session) {
   console.log(`EcoleDirecte asks: "${session.question}"`);
   console.log("Choices are:", session.choices);
 
-  // Submit the string valeur (or index number) of the correct choice:
-  await session.reponse("Cereal before milk");
+  // Submit the string value (or index number) of the correct choice:
+  await session.answer("Cereal before milk");
 }
 
 // 3. You are now logged in and verified. Fetch grades instantly!
 const gradesInfo = await getGrades();
-console.log(`Your average is: ${gradesInfo.average ?? "N/A"}`);
+console.log(`Loaded ${gradesInfo.notes.length} grades!`);
 ```
