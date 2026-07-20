@@ -17,7 +17,6 @@ Whether you are building Discord bots, native mobile apps, web apps, or others, 
 - 🌳 **Tree-shakeable** | Import only what you use.
 - 🚪 **Fully auto auth** | Session cookies, tokens, Two-Factor Challenges (2FA), double auth states, and token refreshes are fully managed silently.
 - 🛣️ **Built-in proxy support** | Perfect for running directly in browsers (bypass CORS).
-- 🧠 **Type-safe mappings** | Dynamic French-to-English translation of API keys, timestamp normalization into JS `Date` objects, and automated Base64 HTML decoding.
 - 🛜 **Offline** | Local caches and built-in offline action queues.
 - 🎓 **Rich feature set** | Supports Grades, Timetable, Homework, Messages, Attendance, Cloud, QCM and more. _Parent account support coming this year!_
 - 🌐 **Available everywhere** | Works flawlessly on Node.js 18+, Bun, Deno, modern Web Browsers, Cloudflare Workers, React Native, Capacitor, Electron, etc.
