@@ -30,15 +30,28 @@ export async function correlate(): Promise<Correlation[]> {
   const subjectGrades = groupGradesBySubject(grades);
 
   subjectGrades.forEach((gradeList, subject) => {
-    if (gradeList.length < 5) return;
+    const values: number[] = [];
+    const validGradeList: any[] = [];
 
-    const values = gradeList.map(
-      (g: any) =>
-        (parseFloat(g.valeur.replace(',', '.')) / parseFloat(g.noteSur)) * 20,
-    );
+    for (const g of gradeList) {
+      if (typeof g.valeur !== 'string' || typeof g.noteSur !== 'string') {
+        continue;
+      }
+      const parsedVal = parseFloat(g.valeur.replace(',', '.'));
+      const parsedSur = parseFloat(g.noteSur.replace(',', '.'));
 
-    correlations.push(analyzeGradeTrend(subject, values, gradeList.length));
-    correlations.push(analyzeDayOfWeekPattern(subject, gradeList, values));
+      if (isNaN(parsedVal) || isNaN(parsedSur) || parsedSur === 0) {
+        continue;
+      }
+
+      values.push((parsedVal / parsedSur) * 20);
+      validGradeList.push(g);
+    }
+
+    if (values.length < 5) return;
+
+    correlations.push(analyzeGradeTrend(subject, values, values.length));
+    correlations.push(analyzeDayOfWeekPattern(subject, validGradeList, values));
   });
 
   return correlations;
