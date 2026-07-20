@@ -20,9 +20,9 @@ console.log(`You have ${cloudItems.length} top-level files or folders.`);
 
 cloudItems.forEach(item => {
   if (item.type === "folder") {
-    console.log(`📁 Folder: ${item.label} (contains ${item.children?.length ?? 0} items)`);
+    console.log(`📁 Folder: ${item.libelle} (contains ${item.children?.length ?? 0} items)`);
   } else {
-    console.log(`📄 File: ${item.label} (${(item.size / 1024).toFixed(1)} KB)`);
+    console.log(`📄 File: ${item.libelle} (${(item.taille / 1024).toFixed(1)} KB)`);
   }
 });
 ```
@@ -63,7 +63,7 @@ function createFolder(
 
 - `name` *(string)*: The name for your new folder.
 - `parentNode` *(CloudNode)*: The folder node where your new folder should be created.
-- `options` *(optional)*: `{, explain?: boolean }`.
+- `options` *(optional)*: `{ explain?: boolean }`.
 
 #### Example
 
@@ -71,11 +71,11 @@ function createFolder(
 import { getCloud, createFolder } from "linkdirecte";
 
 const tree = await getCloud();
-const myParentFolder = tree.find(node => node.type === "folder" && node.label === "My Documents");
+const myParentFolder = tree.find(node => node.type === "folder" && node.libelle === "My Documents");
 
 if (myParentFolder) {
   const newFolder = await createFolder("Math Homework", myParentFolder);
-  console.log(`Successfully created folder: ${newFolder.label}`);
+  console.log(`Successfully created folder: ${newFolder.libelle}`);
 }
 ```
 
@@ -95,7 +95,7 @@ function deleteNodes(
 #### Parameters
 
 - `nodes` *(CloudNode[])*: An array of file or folder nodes to delete.
-- `options` *(optional)*: `{, explain?: boolean }`.
+- `options` *(optional)*: `{ explain?: boolean }`.
 
 #### Example
 
@@ -103,7 +103,7 @@ function deleteNodes(
 import { getCloud, deleteNodes } from "linkdirecte";
 
 const tree = await getCloud();
-const oldFile = tree.find(node => node.type === "file" && node.label === "temporary_draft.txt");
+const oldFile = tree.find(node => node.type === "file" && node.libelle === "temporary_draft.txt");
 
 if (oldFile) {
   const result = await deleteNodes([oldFile]);
@@ -125,17 +125,17 @@ Represents either a folder or a file inside the EcoleDirecte cloud:
 interface CloudNode {
   id: string;               // Unique string ID of the file or folder
   type: "file" | "folder";  // Node type
-  label: string;            // Name of the file or folder
+  libelle: string;          // Name of the file or folder (raw key)
   date: string;             // Date string when created or updated
-  size: number;             // File size in bytes
-  isReadOnly: boolean;      // True if the node is write-protected
-  isHidden: boolean;        // True if the item is hidden
+  taille: number;           // File size in bytes (raw key)
+  readonly: boolean;        // True if the node is write-protected (raw key)
+  hidden: boolean;          // True if the item is hidden (raw key)
   isTrash: boolean;         // True if the item is currently in the trash
   isLoaded?: boolean;       // Indicates if subfolders have been loaded
   quota?: number;           // Space limit in bytes (usually present on top folder)
   displayText?: string;     // Friendly display string
   children?: CloudNode[];   // Child nodes (if a folder)
-  owner?: {
+  proprietaire?: {          // Owner metadata object (raw key)
     id: number;
     type: string;
     nom: string;

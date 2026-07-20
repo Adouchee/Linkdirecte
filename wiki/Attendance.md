@@ -8,20 +8,14 @@ The attendance module makes it super easy to check on a student's absences, dela
 
 To fetch attendance records, you'll use the `getAttendance` function. This retrieves a comprehensive summary of the student's school life events.
 
-> [!NOTE]
-> In the real EcoleDirecte API, absences and latenesses are returned together under a single `attendance` array. You can easily filter them by their `elementType` (e.g. `"Absence"` or `"Retard"`).
-
 ```typescript
 import { getAttendance } from "linkdirecte";
 
 const data = await getAttendance();
 
-// Filter for absences
-const absences = data.attendance?.filter(event => event.elementType === "Absence") ?? [];
-
-if (absences.length > 0) {
-  console.log(`Oh! You have ${absences.length} registered absence(s).`);
-  absences.forEach(absence => {
+if (data.absences && data.absences.length > 0) {
+  console.log(`Oh! You have ${data.absences.length} registered absence(s).`);
+  data.absences.forEach(absence => {
     console.log(`- Date: ${absence.date.toLocaleDateString()} | Reason: ${absence.motif || "No reason specified"}`);
   });
 } else {
@@ -35,7 +29,7 @@ if (absences.length > 0) {
 
 ### `getAttendance`
 
-Fetches the student's full attendance history, including lateness and punishments.
+Fetches the student's full attendance history, including delays and punishments.
 
 ```typescript
 function getAttendance(options?: {
@@ -51,3 +45,37 @@ function getAttendance(options?: {
 #### Returns
 
 A promise that resolves to an `AttendanceResult` object.
+
+---
+
+## 🗂️ Type Definitions
+
+### `AttendanceResult`
+
+```typescript
+interface AttendanceResult {
+  absences?: AttendanceEntry[];
+  delays?: AttendanceEntry[];
+  punishments?: AttendanceEntry[];
+  attendance?: AttendanceEntry[];
+  parametrage?: Record<string, unknown>;
+}
+```
+
+### `AttendanceEntry`
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `number` | Unique ID of the attendance event. |
+| `date` | `Date` | The date of the event. |
+| `type` | `string` | The type code of the event. |
+| `libelleMatiere` | `string` *(optional)* | Subject related to the event. |
+| `justifie` | `boolean` *(optional)* | Whether the event is marked as justified. |
+| `typeJustification` | `string` *(optional)* | Type category of justification. |
+| `nomProf` | `string` *(optional)* | Teacher related to the event. |
+| `pointsPermis` | `number` *(optional)* | Demerit points associated. |
+| `idEleve` | `number` *(optional)* | Student ID. |
+| `motif` | `string` *(optional)* | The reason or motif. |
+| `justifieEd` | `boolean` *(optional)* | EcoleDirecte justified status flag. |
+| `dontNeedJustifiePrim` | `boolean` *(optional)* | Primary education flag. |
+| `jour` | `Date` *(optional)* | Exact day. |

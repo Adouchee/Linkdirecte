@@ -2,7 +2,7 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Event+listening&amp;subtitle=Learn+how+to+listen+for+events+with+Linkdirecte.&amp;logo=lu%3ABell&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Event listening | Learn how to listen for events with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Event+listening&amp;subtitle=Learn+how+to+listen+for+events+with+Linkdirecte.&amp;logo=lu%3ABell&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The Listen module provides a simple event system that lets you poll EcoleDirecte for changes and respond immediately when something new happens—like receiving a brand-new grade, a message, or a new school bulletin!
+The Listen module provides a simple event system that lets you poll EcoleDirecte for changes and respond immediately when something new happens—like receiving a brand-new grade, a message, or a new school activity!
 
 ---
 
@@ -20,15 +20,20 @@ const unsubscribeGrades = on("newGrade", (grade) => {
 
 // 2. Listen for new messages
 on("newMessage", (message) => {
-  console.log(`✉️ New Message from ${message.fromName}: "${message.subject}"`);
+  console.log(`✉️ New Message from ${message.fromName || "Unknown"}: "${message.subject}"`);
 });
 
-// 3. Listen for polling errors (useful if servers go down)
+// 3. Listen for new timeline entries
+on("newTimelineEntry", (entry) => {
+  console.log(`📅 New Activity: [${entry.typeElement}] ${entry.titre}`);
+});
+
+// 4. Listen for polling errors (useful if servers go down)
 on("pollingError", (error) => {
   console.error("⚠️ An error occurred while polling:", error);
 });
 
-// 4. Start the engine! (Polls every 30 seconds)
+// 5. Start the engine! (Polls every 30 seconds)
 startPolling({ interval: 30000 });
 ```
 
@@ -38,7 +43,7 @@ startPolling({ interval: 30000 });
 
 ### `startPolling`
 
-Spins up a lightweight background timer that regularly pulls data from EcoleDirecte, computes differences, and emits events when updates are discovered.
+Spins up a background timer that regularly pulls data from EcoleDirecte, computes differences, and emits events when updates are discovered.
 
 ```typescript
 function startPolling(config?: PollingConfig): void

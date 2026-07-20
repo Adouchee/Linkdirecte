@@ -17,17 +17,24 @@ import { writeFile } from "node:fs/promises";
 // Fetch lists of invoices, report cards, etc.
 const result = await getDocuments();
 
-// Check if any report cards (bulletins) are available under the "grades" document array
-const latestReportCard = result.grades?.[0];
+// Check if any report cards are available under the "notes" document array
+const latestReportCard = result.notes?.[0];
 
-if (latestReportCard && latestReportCard.url) {
-  console.log(`Downloading report card: ${latestReportCard.label}...`);
+if (latestReportCard) {
+  console.log(`Downloading report card: ${latestReportCard.libelle}...`);
 
-  // Download the file as an ArrayBuffer (default)
-  const fileData = await download(latestReportCard.url);
+  // To download documents, send a post request to the download endpoint using the document ID and type
+  const fileData = await download(`https://api.ecoledirecte.com/v3/telechargement.awp`, {
+    as: "buffer",
+    params: {
+      forceDownload: 0,
+      id: latestReportCard.id,
+      type: latestReportCard.type,
+    },
+  });
 
   // Save it locally!
-  await writeFile(`./${latestReportCard.label}.pdf`, Buffer.from(fileData));
+  await writeFile(`./${latestReportCard.libelle}.pdf`, Buffer.from(fileData));
   console.log("Download complete!");
 } else {
   console.log("No report cards available to download.");
@@ -68,10 +75,10 @@ EcoleDirecte categorizes documents into distinct buckets. This object maps each 
 ```typescript
 interface DocumentsResult {
   factures: DocumentEntry[];           // Invoices & financial documents
-  grades?: DocumentEntry[];            // Quarterly report cards / transcripts
+  notes?: DocumentEntry[];             // Quarterly report cards / transcripts (raw key)
   viescolaire?: DocumentEntry[];       // Absences, behavior, and school life reports
-  administratives?: DocumentEntry[];   // Registration files, forms, etc.
-  toUploadList?: DocumentEntry[];      // List of documents the school expects you to upload
+  administratifs?: DocumentEntry[];    // Registration files, forms, etc. (raw key)
+  listesPiecesAVerser?: any;           // List of documents the school expects you to upload (raw key)
 }
 ```
 
@@ -82,12 +89,11 @@ Provides all the metadata you need to describe and download a specific document:
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `id` | `number` | Unique ID of the document. |
-| `label` | `string` | The title/label of the document (e.g., `"Bulletin du 1er Trimestre"`). |
+| `libelle` | `string` | The title/label of the document (e.g., `"Bulletin du 1er Trimestre"`). |
 | `date` | `Date` | The official publication date of this document. |
+| `type` | `string` | Category code. |
+| `idEleve` | `number` | The ID of the student associated with the document. |
+| `signatureDemandee` | `boolean` *(optional)* | Whether parents or students are required to electronically sign this document. |
+| `taille` | `number` *(optional)* | Size of the document file in bytes. |
 | `libelleMatiere` | `string` *(optional)* | Subject label if related to a specific class. |
 | `nomProf` | `string` *(optional)* | Teacher related to the document. |
-| `size` | `number` *(optional)* | Size of the document file in bytes. |
-| `url` | `string` *(optional)* | The secure download URL. Pass this URL to `download()` to fetch the file! |
-| `studentId` | `string` *(optional)* | The ID of the student associated with the document. |
-| `signatureDemandee` | `boolean` *(optional)* | Whether parents or students are required to electronically sign this document. |
-| `type` | `string` *(optional)* | Category code. |

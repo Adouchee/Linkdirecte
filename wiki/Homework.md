@@ -20,7 +20,7 @@ for (const [date, assignments] of Object.entries(calendar)) {
   console.log(`\n📅 Assignments for ${date}:`);
 
   assignments.forEach(task => {
-    const status = task.effectue === "1" || task.effectue === true ? "✅ DONE" : "❌ TO DO";
+    const status = task.effectue ? "✅ DONE" : "❌ TO DO";
     console.log(`- [${status}] [${task.matiere}] ${task.aFaire?.contenu || "Read class notes."}`);
   });
 }
@@ -136,7 +136,8 @@ interface HomeworkResult {
 | `matiere` | `string` | Readable subject name. |
 | `nomProf` | `string` *(optional)* | Name of the teacher who assigned the work. |
 | `donneLe` | `Date` | The date the homework was originally assigned. |
-| `effectue` | `string` \| `boolean` | Indicates if marked by the student as complete. |
+| `forDate` | `Date` | The date when the homework is due. |
+| `effectue` | `boolean` | Indicates if marked by the student as complete. |
 | `rendreEnLigne` | `boolean` *(optional)* | Indicates if the assignment must be submitted digitally. |
 
 ### `MarkAsDoneResult`

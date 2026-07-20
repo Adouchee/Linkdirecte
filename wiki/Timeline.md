@@ -18,8 +18,8 @@ const events = await getTimeline();
 console.log(`There are ${events.length} recent events on your feed:`);
 
 events.slice(0, 5).forEach(event => {
-  console.log(`- [${event.elementType}] ${event.title || "Activity update"}`);
-  if (event.subtitle) console.log(`  Detail: ${event.subtitle}`);
+  console.log(`- [${event.typeElement}] ${event.titre || "Activity update"}`);
+  if (event.soustitre) console.log(`  Detail: ${event.soustitre}`);
 });
 ```
 
@@ -65,7 +65,7 @@ Fetches general school notices, bulletins, and shared announcements. Linkdirecte
 ```typescript
 function getCommonTimeline(options?: {
   explain?: boolean;
-}): Promise<TimelineEntry[]>
+}): Promise<any>
 ```
 
 ---
@@ -86,16 +86,16 @@ function correlate(): Promise<Correlation[]>
 
 ### `TimelineEntry`
 
+The properties of `TimelineEntry` are returned as raw EcoleDirecte API keys (no translation is performed by the SDK):
+
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `id` | `number` | Unique ID of the event. |
-| `elementType` | `string` | The event code (e.g., `"Note"`, `"Devoir"`, `"Viescolaire"`). |
-| `creationDate` | `Date` | Timestamp of when the event occurred. |
-| `title` | `string` *(optional)* | Primary description of the event. |
-| `subtitle` | `string` *(optional)* | Supporting description or sub-label. |
-| `content` | `string` *(optional)* | Extended body text. |
-| `libelleMatiere` | `string` *(optional)* | Classroom subject associated with this update. |
-| `nomProf` | `string` *(optional)* | Teacher related to this item. |
+| `typeElement` | `string` | The event code (e.g., `"Note"`, `"Devoir"`, `"Viescolaire"`). (raw key) |
+| `date` | `Date` | Timestamp of when the event occurred. (raw key) |
+| `titre` | `string` *(optional)* | Primary description of the event. (raw key) |
+| `soustitre` | `string` *(optional)* | Supporting description or sub-label. (raw key) |
+| `contenu` | `string` *(optional)* | Extended body text. (raw key) |
 
 ### `Correlation`
 
@@ -104,7 +104,7 @@ interface Correlation {
   type: CorrelationType;             // Category of correlation analysis
   subject: string;                   // Subject name being analyzed
   finding: string;                   // Brief summary of findings
-  data: Record<string, number>;      // Key-valeur statistics map (averages, days, etc.)
+  data: Record<string, number>;      // Key-value statistics map (averages, days, etc.)
   confidence: number;                // Statistical confidence score (from 0 to 1)
   observations: number;              // Number of entries/data-points analyzed
 }

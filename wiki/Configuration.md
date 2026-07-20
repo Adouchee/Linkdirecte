@@ -2,13 +2,7 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Configuration&amp;subtitle=Learn+how+to+configure+Linkdirecte.&amp;logo=lu%3ASettings2&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Configuration | Learn how to configure Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Configuration&amp;subtitle=Learn+how+to+configure+Linkdirecte.&amp;logo=lu%3ASettings2&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The Core module handles global SDK configurations, session state preservation via **Storage Adapters**, file downloads, proactive token health keepalives, background data prefetching, and transparent storage encryption.
-
----
-
-## 🛠️ Global Configuration
-
-You can customize how Linkdirecte behaves (such as request timeouts, retry behavior, caching, and offline queues) globally by calling the `configure` function.
+You can configure global SDK behaviors (such as request timeouts, retry behavior, caching, and offline queues) globally by calling the `configure` (exported as `configure` or `setConfig`) function.
 
 ### `configure`
 
@@ -126,7 +120,7 @@ export default {
 ```
 
 ### `asyncStorage` (Custom Wrappers)
-Allows you to wrap any asynchronous key-valeur storage engine. Here's how to wrap React Native's `@react-native-async-storage/async-storage`:
+Allows you to wrap any asynchronous key-value storage engine. Here's how to wrap React Native's `@react-native-async-storage/async-storage`:
 ```typescript
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { configure, asyncStorage } from "linkdirecte";
@@ -134,7 +128,7 @@ import { configure, asyncStorage } from "linkdirecte";
 configure({
   storage: asyncStorage({
     getItem: (key) => AsyncStorage.getItem(key),
-    setItem: (key, valeur) => AsyncStorage.setItem(key, valeur),
+    setItem: (key, value) => AsyncStorage.setItem(key, value),
     removeItem: (key) => AsyncStorage.removeItem(key),
   }),
 });
@@ -301,7 +295,7 @@ The standard interface for defining custom data storage persistence.
 ```typescript
 interface StorageAdapter {
   get(key: string): string | null | Promise<string | null>;
-  set(key: string, valeur: string): void | Promise<void>;
+  set(key: string, value: string): void | Promise<void>;
   delete(key: string): void | Promise<void>;
 }
 ```

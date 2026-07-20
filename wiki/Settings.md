@@ -52,10 +52,10 @@ Saves updated contact details, credentials, or security questions.
 function updateSettings(
   data: {
     email?: string;
-    portable?: string;              // French alias for mobile phone (mapped under the hood)
-    questionSecrete?: string;       // French alias for secret question
-    reponse?: string;               // French alias for reponse
-    nouveauMotDePasse?: string;     // French alias for new password
+    portable?: string;              // French key for mobile phone
+    questionSecrete?: string;       // French key for secret question
+    reponse?: string;               // French key for response
+    nouveauMotDePasse?: string;     // French key for new password
     identifiant?: string;           // Username identifier
   },
   options?: { explain?: boolean }
@@ -96,7 +96,7 @@ if (result.success) {
 
 ### `AccountSettings`
 
-The properties of `AccountSettings` are mapped to clean English keys by the Linkdirecte transform engine:
+The properties of `AccountSettings` are returned as raw EcoleDirecte API keys (no translation is performed by the SDK):
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
@@ -105,6 +105,6 @@ The properties of `AccountSettings` are mapped to clean English keys by the Link
 | `email` | `string` | Registered contact email address. |
 | `portable` | `string` | Registered mobile telephone number. |
 | `questionSecrete` | `string` | The active security challenge question. |
-| `reponse` | `string` | Decoded reponse for the security question. |
+| `reponse` | `string` | Response for the security question. |
 | `accessToken` | `string` | Secure session access token. |
 | `possibleQuestions` | `string[]` | Pre-defined questions available to choose from for your security question. |

@@ -64,7 +64,7 @@ const session = await login("username", "password", {
 
 ### 2. The Step-by-Step Response (Interactive)
 
-If no callback is provided, `login()` returns a special `LoginChallenge` object. You can present this to your user and call its `.reponse()` method when they're ready!
+If no callback is provided, `login()` returns a special `LoginChallenge` object. You can present this to your user and call its `.answer()` method when they're ready!
 
 ```typescript
 import { login } from "linkdirecte";
@@ -77,7 +77,7 @@ if ("question" in result) {
   console.log("Options:", result.choices);
 
   // Submit the selected choice index or option text:
-  const session = await result.reponse("My Secret Answer");
+  const session = await result.answer("My Secret Answer");
   console.log(`Logged in! Hello, ${session.user.prenom}`);
 } else {
   console.log(`Logged in... without 2FA?! Hello, ${result.user.prenom}`);
@@ -145,7 +145,7 @@ async function refreshToken(): Promise<string>
 
 ### `LoginResult`
 
-The return valeur of `login()` is a union:
+The return value of `login()` is a union:
 
 ```typescript
 type LoginResult = LoginSuccess | LoginChallenge;
@@ -172,7 +172,7 @@ interface LoginChallenge {
   type: "securityQuestion";
   question: string;
   choices: string[];
-  reponse: (choiceIndexOrText: number | string) => Promise<LoginSuccess>;
+  answer: (choiceIndexOrText: number | string) => Promise<LoginSuccess>;
 }
 ```
 
@@ -182,7 +182,7 @@ Contains the student's profile, classes, and active modules:
 
 ```typescript
 interface Account {
-  loginId: number;
+  idLogin: number;
   id: number;
   uid: string;
   identifiant: string;
@@ -199,7 +199,7 @@ interface Account {
     classe?: {
       id: number;
       code: string;
-      label: string;
+      libelle: string;
     };
   };
   modules: Array<{
