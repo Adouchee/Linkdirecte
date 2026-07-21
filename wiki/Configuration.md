@@ -74,8 +74,8 @@ When `proxyUrl` is configured, Linkdirecte rewrites all outgoing request URLs to
 By default, Linkdirecte automatically detects and selects the best storage option for your environment:
 
 1. **IndexedDB** — used in IndexedDB-capable runtimes (browsers, CF Workers, Deno).
-2. **localStorage** — used in standard Web Storage runtimes (browsers, React Native).
-3. **Node/Bun File Storage** — used in Node.js or Bun environments.
+2. **localStorage** — used in standard Web Storage runtimes (browsers if IndexedDB unavailable, React Native).
+3. **Node Storage** — used in Node.js or Bun environments.
 4. **Memory Storage** — falls back to volatile in-memory storage if nothing else is available.
 
 You can explicitly force an adapter or supply a custom one.
@@ -140,14 +140,14 @@ configure({
 
 Concerned about storing credentials on disk or in the browser? Simply provide a `passkey`!
 
-When a `passkey` is specified, Linkdirecte will **automatically wrap** your active storage adapter with an encrypted wrapper. All session tokens, IDs, and account info will be encrypted using robust **AES-GCM** before writing, and decrypted on read.
+When a `passkey` is specified, Linkdirecte will **automatically wrap** your active storage adapter with an encrypted wrapper. All session tokens, IDs, and account info will be encrypted using **AES-GCM** before writing, and decrypted on read.
 
 ```typescript
 import { configure, nodeStorage } from "linkdirecte";
 
 configure({
   storage: nodeStorage(),
-  passkey: "super-secret-user-defined-password" // Transparent encryption enabled!
+  passkey: "super-secret-password" // Encryption enabled!
 });
 ```
 
@@ -157,7 +157,7 @@ configure({
 
 ### `download`
 
-Retrieves documents, invoices, or resources from EcoleDirecte.
+Retrieves documents and other resources from EcoleDirecte.
 
 ```typescript
 function download(url: string, options?: DownloadOptions): Promise<ArrayBuffer | Blob | ReadableStream>
@@ -172,7 +172,7 @@ function download(url: string, options?: DownloadOptions): Promise<ArrayBuffer |
 import { download } from "linkdirecte";
 import { writeFile } from "node:fs/promises";
 
-const fileArrayBuffer = await download("https://api.ecoledirecte.com/v3/file-endpoint.awp");
+const fileArrayBuffer = await download("https://api.ecoledirecte.com/file.pdf");
 
 await writeFile("./report-card.pdf", Buffer.from(fileArrayBuffer));
 console.log("PDF written to disk!");
@@ -190,7 +190,7 @@ function downloadPhoto(options?: { as?: "buffer" | "blob" | "stream" }): Promise
 
 ## 🛟 Offline Mutation Queue
 
-When the network is spotty, you don't want actions like marking homework as completed to be lost. By enabling `offlineQueue: true` in your configuration, any modifying requests (like `markAsDone`) will be recorded locally if the user is offline.
+When no internet is available, you don't want actions like marking homework as completed to be lost. By enabling `offlineQueue: true` in your configuration, supported mutating requests will be recorded locally if the user is offline. The following functions are queued: `markAsDone`, `sendHomeworkComment`, `createFolder`, `deleteNodes`, `sendMessage`, and `updateSettings`.
 
 You can synchronize them once the connection is restored:
 

@@ -43,9 +43,7 @@ if (activeQuiz) {
 Retrieves a list of all assigned questionnaires/QCMs.
 
 ```typescript
-function getQcms(options?: {
-  explain?: boolean;
-}): Promise<QcmsResult>
+function getQcms(): Promise<QcmsResult>
 ```
 
 ---
@@ -58,7 +56,6 @@ Retrieves the question set and candidate choices for a specific QCM.
 function getQcmDetail(
   idQcm: number,
   idAssociation: number,
-  options?: { explain?: boolean }
 ): Promise<QcmDetailResult>
 ```
 
@@ -74,7 +71,6 @@ function updateQcmStatus(
   idAssociation: number,
   idParticipant: number,
   action: "updateStartDate" | "updateEndDate",
-  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 
@@ -97,7 +93,6 @@ function submitQcmAnswer(
     idQuestion: number;
     choiceIds: number[];
   },
-  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 

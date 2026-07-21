@@ -1,6 +1,5 @@
 // © 2026 typeof (Scolup) | Licensed under AGPL 3.0
 import { edFetch } from '../../core/fetch';
-import { postOptions } from '../../core/request';
 
 export interface DocumentEntry {
   id: number;
@@ -21,13 +20,9 @@ export interface DocumentsResult {
   [key: string]: unknown;
 }
 
-export async function getDocuments(
-  options: { explain?: boolean } = {},
-): Promise<DocumentsResult> {
-  const request = {
-    endpoint: '/elevesDocuments.awp?v=7.14.3&verbe=get',
-    options: postOptions({}, options),
-  };
-
-  return edFetch<DocumentsResult>(request.endpoint, request.options);
+export async function getDocuments(): Promise<DocumentsResult> {
+  return edFetch<DocumentsResult>('/elevesDocuments.awp?v=7.14.3&verbe=get', {
+    method: 'POST',
+    body: {},
+  });
 }

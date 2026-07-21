@@ -26,7 +26,6 @@ export async function getTimetable(
   options: {
     startDate?: string | Date;
     endDate?: string | Date;
-    explain?: boolean;
   } = {},
 ): Promise<TimetableResult> {
   const account = requireCurrentAccount();
@@ -43,7 +42,6 @@ export async function getTimetable(
       dateFin: end,
       avecTrous: false,
     },
-    ...options,
   });
 }
 

@@ -27,7 +27,7 @@ export interface HomeworkResult {
 }
 
 export async function getHomework(
-  options: { withContent?: boolean; explain?: boolean } = {},
+  options: { withContent?: boolean } = {},
 ): Promise<HomeworkResult> {
   const account = requireCurrentAccount();
   const result = await edFetch<HomeworkResult>(
@@ -38,9 +38,7 @@ export async function getHomework(
   if (options.withContent) {
     await Promise.all(
       Object.keys(result).map(async (date) => {
-        const detail = (await getHomeworkForDate(date, {
-          explain: options.explain,
-        })) as any;
+        const detail = (await getHomeworkForDate(date)) as any;
         result[date] = detail.matieres || detail.subjects || detail;
       }),
     );
@@ -51,7 +49,6 @@ export async function getHomework(
 
 export async function getHomeworkForDate(
   date: string | Date,
-  options: { explain?: boolean } = {},
 ): Promise<HomeworkEntry[]> {
   const account = requireCurrentAccount();
   const formattedDate = dayjs(date).format('YYYY-MM-DD');
@@ -61,12 +58,13 @@ export async function getHomeworkForDate(
       'INVALID_ARGUMENT',
     );
   }
-  const request = {
-    endpoint: `/Eleves/${account.id}/cahierdetexte/${formattedDate}.awp?v=7.14.3&verbe=get`,
-    options: postOptions({}, options),
-  };
-
-  return edFetch<any>(request.endpoint, request.options);
+  return edFetch<any>(
+    `/Eleves/${account.id}/cahierdetexte/${formattedDate}.awp?v=7.14.3&verbe=get`,
+    {
+      method: 'POST',
+      body: {},
+    },
+  );
 }
 
 export interface MarkAsDoneResult {
@@ -76,28 +74,25 @@ export interface MarkAsDoneResult {
 
 export async function markAsDone(
   homeworkIds: number[],
-  options: { explain?: boolean } = {},
 ): Promise<MarkAsDoneResult> {
   assertNonEmptyArray(homeworkIds, 'homeworkIds');
   const account = requireCurrentAccount();
-  const request = {
-    endpoint: `/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=put`,
-    options: postOptions(
-      {
+  return edFetch<MarkAsDoneResult>(
+    `/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=put`,
+    {
+      method: 'POST',
+      queued: true,
+      body: {
         idDevoirsEffectues: homeworkIds,
         idDevoirsNonEffectues: [],
       },
-      options,
-    ),
-  };
-
-  return edFetch<MarkAsDoneResult>(request.endpoint, request.options);
+    },
+  );
 }
 
 export async function sendHomeworkComment(
   idContenu: number,
   message: string,
-  options: { explain?: boolean } = {},
 ): Promise<{ id: number }> {
   assertPositiveNumber(idContenu, 'idContenu');
   assertNonEmptyString(message, 'message');
@@ -105,10 +100,10 @@ export async function sendHomeworkComment(
   const endpoint = `/eleves/${account.id}/afaire/commentaires.awp?v=7.14.3&verbe=post`;
   return edFetch<{ id: number }>(endpoint, {
     method: 'POST',
+    queued: true,
     body: {
       idContenu,
       message: encodeBase64(message),
     },
-    ...options,
   });
 }

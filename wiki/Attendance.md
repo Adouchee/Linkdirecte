@@ -2,11 +2,11 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Attendance&amp;subtitle=Learn+how+to+get+attendance+data+with+Linkdirecte.&amp;logo=lu%3AUser&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Attendance | Learn how to get attendance data with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Attendance&amp;subtitle=Learn+how+to+get+attendance+data+with+Linkdirecte.&amp;logo=lu%3AUser&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The attendance module makes it super easy to check on a student's absences, delays, and any disciplinary events (like punishments) recorded in EcoleDirecte.
+The attendance module makes it super easy to check on a student's absences, delays, and any disciplinary events (like punishments) in EcoleDirecte.
 
 ## 🚀 Getting Started
 
-To fetch attendance records, you'll use the `getAttendance` function. This retrieves a comprehensive summary of the student's school life events.
+To fetch attendance, you'll use the `getAttendance` function.
 
 ```typescript
 import { getAttendance } from "linkdirecte";
@@ -32,15 +32,8 @@ if (data.absences && data.absences.length > 0) {
 Fetches the student's full attendance history, including delays and punishments.
 
 ```typescript
-function getAttendance(options?: {
-  explain?: boolean;
-}): Promise<AttendanceResult>
+function getAttendance(): Promise<AttendanceResult>
 ```
-
-#### Parameters
-
-- `options` *(optional)*:
-  - `explain` *(boolean)*: If set to `true`, includes a special `_debug` property on the result containing detailed HTTP and cache logs.
 
 #### Returns
 

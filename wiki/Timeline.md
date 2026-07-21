@@ -51,9 +51,7 @@ correlations.forEach(insight => {
 Retrieves a chronologically ordered list of events relevant to the logged-in student.
 
 ```typescript
-function getTimeline(options?: {
-  explain?: boolean;
-}): Promise<TimelineEntry[]>
+function getTimeline(): Promise<TimelineEntry[]>
 ```
 
 ---
@@ -63,9 +61,7 @@ function getTimeline(options?: {
 Fetches general school notices, bulletins, and shared announcements. Linkdirecte automatically decodes French HTML "sticky notes" (`stickyNotes`) for you in the process.
 
 ```typescript
-function getCommonTimeline(options?: {
-  explain?: boolean;
-}): Promise<any>
+function getCommonTimeline(): Promise<any>
 ```
 
 ---

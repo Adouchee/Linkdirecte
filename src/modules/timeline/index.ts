@@ -12,27 +12,21 @@ export interface TimelineEntry {
   [key: string]: unknown;
 }
 
-export async function getTimeline(
-  options: { explain?: boolean } = {},
-): Promise<TimelineEntry[]> {
+export async function getTimeline(): Promise<TimelineEntry[]> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/timeline.awp?v=7.14.3&verbe=get`;
   return edFetch<TimelineEntry[]>(endpoint, {
     method: 'POST',
     body: {},
-    ...options,
   });
 }
 
-export async function getCommonTimeline(
-  options: { explain?: boolean } = {},
-): Promise<any> {
+export async function getCommonTimeline(): Promise<any> {
   const account = requireCurrentAccount();
   const endpoint = `/E/${account.id}/timelineAccueilCommun.awp?v=7.14.3&verbe=get`;
   return edFetch<any>(endpoint, {
     method: 'POST',
     body: {},
-    ...options,
   });
 }
 

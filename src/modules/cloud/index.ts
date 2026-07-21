@@ -5,7 +5,6 @@ import type { CloudNode, CloudEntry } from '../../types';
 
 export interface GetCloudOptions {
   depth?: number;
-  explain?: boolean;
 }
 
 export async function getCloud(
@@ -23,26 +22,24 @@ export async function getCloud(
 export async function createFolder(
   name: string,
   parentNode: CloudNode,
-  options: { explain?: boolean } = {},
 ): Promise<CloudNode> {
   const account = requireCurrentAccount();
   const endpoint = `/cloud/E/${account.id}.awp?v=7.14.3&verbe=post`;
   return edFetch<CloudNode>(endpoint, {
     method: 'POST',
+    queued: true,
     body: { parentNode, libelle: name, typeRessource: 'folder' },
-    ...options,
   });
 }
 
 export async function deleteNodes(
   nodes: CloudNode[],
-  options: { explain?: boolean } = {},
 ): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
   const endpoint = `/cloud/E/${account.id}/visibility.awp?v=7.14.3&verbe=delete`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
+    queued: true,
     body: { tabNodes: nodes },
-    ...options,
   });
 }

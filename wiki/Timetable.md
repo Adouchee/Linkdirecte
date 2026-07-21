@@ -51,7 +51,6 @@ Retrieves a chronologically ordered array of scheduled class sessions.
 function getTimetable(options?: {
   startDate?: string | Date;
   endDate?: string | Date;
-  explain?: boolean;
 }): Promise<TimetableResult>
 ```
 
@@ -60,7 +59,6 @@ function getTimetable(options?: {
 - `options` *(optional)*:
   - `startDate` *(string | Date)*: The beginning of the timetable window. Can be a standard JavaScript `Date` object or an ISO-style date string (`"YYYY-MM-DD"`). Defaults to today.
   - `endDate` *(string | Date)*: The end of the timetable window. Defaults to the same value as `startDate`.
-  - `explain` *(boolean)*: Includes networking and caching metrics under a `_debug` property.
 
 ---
 

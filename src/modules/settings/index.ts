@@ -3,29 +3,23 @@ import { edFetch } from '../../core/fetch';
 import { requireCurrentAccount } from '../../core/request';
 import type { AccountSettings } from '../../types';
 
-export async function getSettings(
-  options: { explain?: boolean } = {},
-): Promise<AccountSettings> {
+export async function getSettings(): Promise<AccountSettings> {
   const account = requireCurrentAccount();
   const endpoint = `/logins/${account.idLogin}.awp?v=7.14.3&verbe=get`;
   return edFetch<AccountSettings>(endpoint, {
     method: 'POST',
     body: {},
-    ...options,
   });
 }
 
-export async function updateSettings(
-  data: {
-    email?: string;
-    portable?: string;
-    questionSecrete?: string;
-    reponse?: string;
-    nouveauMotDePasse?: string;
-    identifiant?: string;
-  },
-  options: { explain?: boolean } = {},
-): Promise<AccountSettings> {
+export async function updateSettings(data: {
+  email?: string;
+  portable?: string;
+  questionSecrete?: string;
+  reponse?: string;
+  nouveauMotDePasse?: string;
+  identifiant?: string;
+}): Promise<AccountSettings> {
   const account = requireCurrentAccount();
   const payload: Record<string, string> = {
     identifiant: account.identifiant,
@@ -37,14 +31,13 @@ export async function updateSettings(
   const endpoint = `/logins/${account.idLogin}.awp?v=7.14.3&verbe=put`;
   return edFetch<AccountSettings>(endpoint, {
     method: 'POST',
+    queued: true,
     body: payload,
-    ...options,
   });
 }
 
 export async function updateAccessibility(
   enabled: boolean,
-  options: { explain?: boolean } = {},
 ): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
 
@@ -56,7 +49,6 @@ export async function updateAccessibility(
         path: `Préférences/Elèves/accessibiliteVisuelle/${account.id}`,
         value: enabled ? '1' : '0',
       },
-      ...options,
     },
   );
 }

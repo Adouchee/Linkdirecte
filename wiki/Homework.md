@@ -2,7 +2,7 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Homework+%26+session+content&amp;subtitle=Learn+how+to+get+homework+and+session+content+with+Linkdirecte.&amp;logo=lu%3ANotebook&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Homework &amp; Session content | Learn how to get homework and session content with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Homework+%26+session+content&amp;subtitle=Learn+how+to+get+homework+and+session+content+with+Linkdirecte.&amp;logo=lu%3ANotebook&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The Homework module gives you programmatic access to the student's assignment diary ("Cahier de Texte"). It allows you to fetch homework assignments, load full descriptions, retrieve attachments, and mark tasks as done (even when offline!).
+The Homework module gives you access to the student's textbook. It allows you to fetch homework, session content, and mark tasks as done (even when offline!).
 
 ---
 
@@ -21,7 +21,7 @@ for (const [date, assignments] of Object.entries(calendar)) {
 
   assignments.forEach(task => {
     const status = task.effectue ? "✅ DONE" : "❌ TO DO";
-    console.log(`- [${status}] [${task.matiere}] ${task.aFaire?.contenu || "Read class notes."}`);
+    console.log(`- [${status}] [${task.matiere}] ${task.aFaire?.contenu}`);
   });
 }
 ```
@@ -37,7 +37,6 @@ Fetches a calendar index of homework due over the next few weeks.
 ```typescript
 function getHomework(options?: {
   withContent?: boolean;
-  explain?: boolean;
 }): Promise<HomeworkResult>
 ```
 
@@ -45,7 +44,6 @@ function getHomework(options?: {
 
 - `options` *(optional)*:
   - `withContent` *(boolean)*: If set to `true`, the SDK will make background queries to resolve detailed HTML descriptions and attachments for each date. Defaults to `false`.
-  - `explain` *(boolean)*: Includes detailed network debugging inside `_debug`.
 
 #### Returns
 
@@ -60,7 +58,6 @@ Loads detailed descriptions and resources for a specific day.
 ```typescript
 function getHomeworkForDate(
   date: string | Date,
-  options?: { explain?: boolean }
 ): Promise<HomeworkEntry[]>
 ```
 
@@ -85,12 +82,8 @@ Updates the state of one or more homework assignments to completed.
 ```typescript
 function markAsDone(
   homeworkIds: number[],
-  options?: { explain?: boolean }
 ): Promise<MarkAsDoneResult>
 ```
-
-#### Resilience (Offline Syncing!)
-If you have `offlineQueue: true` enabled in your global configuration, and the student's device is currently offline, calling `markAsDone` won't throw an error. Instead, Linkdirecte will **automatically save the request** in local storage and queue it up. You can synchronize it later by calling `offlineQueue.flush()`.
 
 ---
 
@@ -102,7 +95,6 @@ Post a comment under a homework assignment or a session content.
 function sendHomeworkComment(
   idContenu: number,
   message: string,
-  options?: { explain?: boolean }
 ): Promise<{ id: number }>
 ```
 

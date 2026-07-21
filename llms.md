@@ -106,8 +106,6 @@ import { getGrades } from 'linkdirecte';
 
 const result = await getGrades({
   periodId: 'A001', // Optional specific period
-  raw: false,       // Returns raw API if true
-  explain: false,   // Includes debug data if true
 });
 
 console.log(result.grades); // Flat array of GradeEntry

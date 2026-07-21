@@ -37,9 +37,7 @@ console.log(`Email updated to: ${updated.email}`);
 Fetches user login attributes and profile settings.
 
 ```typescript
-function getSettings(options?: {
-  explain?: boolean;
-}): Promise<AccountSettings>
+function getSettings(): Promise<AccountSettings>
 ```
 
 ---
@@ -58,7 +56,6 @@ function updateSettings(
     nouveauMotDePasse?: string;     // French key for new password
     identifiant?: string;           // Username identifier
   },
-  options?: { explain?: boolean }
 ): Promise<AccountSettings>
 ```
 
@@ -73,7 +70,6 @@ Enables or disables visual accessibility enhancements (e.g. high contrast or enl
 ```typescript
 function updateAccessibility(
   enabled: boolean,
-  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 

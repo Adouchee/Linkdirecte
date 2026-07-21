@@ -120,20 +120,6 @@ export type ErrorMiddleware = (
   retry: (options?: { delay?: number }) => Promise<unknown>,
 ) => void | Promise<void>;
 
-export interface DebugInfo {
-  rawResponse: unknown;
-  transformLog: any[];
-  requestDump: {
-    url: string;
-    headers: Record<string, string>;
-    body: any;
-  };
-  cacheHit: boolean;
-  retries: number;
-}
-
-export type WithDebug<T> = T & { _debug?: DebugInfo };
-
 export interface CloudNode {
   id: string;
   type: 'file' | 'folder';

@@ -26,19 +26,17 @@ import {
   getFromCache,
   setInCache,
 } from './cache';
-import type { DebugInfo, EdResponse } from '../types';
-
 export interface FetchOptions {
   method?: HttpMethod;
   body?: unknown;
   params?: QueryParams;
-  explain?: boolean;
   skipAuth?: boolean;
   useGtk?: string;
   twofaToken?: string;
   xToken?: string;
   isDownload?: boolean;
   skipQueue?: boolean;
+  queued?: boolean;
   returnEnvelope?: boolean;
 }
 
@@ -125,7 +123,7 @@ export async function edFetch<T>(
         config.offlineQueue &&
         !options.skipQueue &&
         !options.skipAuth &&
-        options.method !== 'GET'
+        options.queued === true
       ) {
         offlineQueue.push(endpoint, options as Record<string, unknown>);
       }
@@ -189,23 +187,6 @@ export async function edFetch<T>(
     }
 
     let result = transform(data.data);
-
-    if (options.explain) {
-      result = {
-        ...result,
-        _debug: {
-          rawResponse: data,
-          transformLog: [],
-          requestDump: {
-            url: req.url.toString(),
-            headers: req.headers,
-            body: req.options.body,
-          },
-          cacheHit: false,
-          retries: 0,
-        },
-      };
-    }
 
     if (isCacheable && cacheKey) {
       setInCache(cacheKey, result, ttl);

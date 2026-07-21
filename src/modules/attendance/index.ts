@@ -28,14 +28,11 @@ export interface AttendanceResult {
   [key: string]: unknown;
 }
 
-export async function getAttendance(
-  options: { explain?: boolean } = {},
-): Promise<AttendanceResult> {
+export async function getAttendance(): Promise<AttendanceResult> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/viescolaire.awp?v=7.14.3&verbe=get`;
   return edFetch<AttendanceResult>(endpoint, {
     method: 'POST',
     body: {},
-    ...options,
   });
 }

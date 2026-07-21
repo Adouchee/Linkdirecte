@@ -18,15 +18,12 @@ export interface QcmsResult {
   [key: string]: unknown;
 }
 
-export async function getQcms(
-  options: { explain?: boolean } = {},
-): Promise<QcmsResult> {
+export async function getQcms(): Promise<QcmsResult> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/qcms/0/associations.awp?v=7.14.3&verbe=get`;
   return edFetch<QcmsResult>(endpoint, {
     method: 'POST',
     body: {},
-    ...options,
   });
 }
 
@@ -43,14 +40,12 @@ export interface QcmDetailResult {
 export async function getQcmDetail(
   idQcm: number,
   idAssociation: number,
-  options: { explain?: boolean } = {},
 ): Promise<QcmDetailResult> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/qcms/${idQcm}/associations/${idAssociation}.awp?v=7.14.3&verbe=get`;
   return edFetch<QcmDetailResult>(endpoint, {
     method: 'POST',
     body: { anneeQCMs: '' },
-    ...options,
   });
 }
 
@@ -59,28 +54,23 @@ export async function updateQcmStatus(
   idAssociation: number,
   idParticipant: number,
   action: 'updateStartDate' | 'updateEndDate',
-  options: { explain?: boolean } = {},
 ): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/qcms/${idQcm}/associations/${idAssociation}/participants/${idParticipant}.awp?v=7.14.3&verbe=patch`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
     body: { action },
-    ...options,
   });
 }
 
-export async function submitQcmAnswer(
-  params: {
-    idQcm: number;
-    idAssociation: number;
-    idParticipant: number;
-    idReponse: number;
-    idQuestion: number;
-    choiceIds: number[];
-  },
-  options: { explain?: boolean } = {},
-): Promise<{ success: boolean }> {
+export async function submitQcmAnswer(params: {
+  idQcm: number;
+  idAssociation: number;
+  idParticipant: number;
+  idReponse: number;
+  idQuestion: number;
+  choiceIds: number[];
+}): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/qcms/${params.idQcm}/associations/${params.idAssociation}/participants/${params.idParticipant}/reponse/${params.idReponse}.awp?v=7.14.3&verbe=patch`;
   return edFetch<{ success: boolean }>(endpoint, {
@@ -93,6 +83,5 @@ export async function submitQcmAnswer(
         choix: params.choiceIds,
       },
     },
-    ...options,
   });
 }

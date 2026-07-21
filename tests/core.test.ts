@@ -299,6 +299,7 @@ describe('Core Fetch Mechanism & Error Handling', () => {
     expect(
       edFetch('/some-mutation.awp', {
         method: 'POST',
+        queued: true,
         body: { homeworkId: 123, isDone: true },
       }),
     ).rejects.toThrow();

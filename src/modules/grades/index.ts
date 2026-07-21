@@ -42,13 +42,12 @@ export interface GradesResult {
 }
 
 export async function getGrades(
-  options: { periodId?: string; explain?: boolean } = {},
+  options: { periodId?: string } = {},
 ): Promise<GradesResult> {
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/notes.awp?v=7.14.3&verbe=get`;
   return edFetch<GradesResult>(endpoint, {
     method: 'POST',
     body: { anneeScolaire: options.periodId || '' },
-    ...options,
   });
 }

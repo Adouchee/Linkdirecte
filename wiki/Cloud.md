@@ -2,7 +2,7 @@
   <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Cloud&amp;subtitle=Learn+how+to+get+cloud+data+with+Linkdirecte.&amp;logo=lu%3ACloud&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Cloud | Learn how to get cloud data with Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Cloud&amp;subtitle=Learn+how+to+get+cloud+data+with+Linkdirecte.&amp;logo=lu%3ACloud&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
-The Cloud module gives you full access to EcoleDirecte's "Porte-documents" (document holder / personal cloud storage). This allows students to retrieve personal files, organize their workspaces into folders, and clean up unwanted documents.
+The Cloud module gives you full access to EcoleDirecte's personal cloud storage.
 
 ---
 
@@ -43,7 +43,6 @@ function getCloud(options?: GetCloudOptions): Promise<CloudEntry[]>
 
 - `options` *(optional)*:
   - `depth` *(number)*: How many folders deep the SDK should scan and build children arrays for. Defaults to `3`.
-  - `explain` *(boolean)*: Includes request dumps, logs, and caching details in `_debug`.
 
 ---
 
@@ -55,7 +54,6 @@ Creates a new folder under a parent directory.
 function createFolder(
   name: string,
   parentNode: CloudNode,
-  options?: { explain?: boolean }
 ): Promise<CloudNode>
 ```
 
@@ -63,7 +61,6 @@ function createFolder(
 
 - `name` *(string)*: The name for your new folder.
 - `parentNode` *(CloudNode)*: The folder node where your new folder should be created.
-- `options` *(optional)*: `{ explain?: boolean }`.
 
 #### Example
 
@@ -88,14 +85,12 @@ Moves files or folders to the Recycle Bin / Trash.
 ```typescript
 function deleteNodes(
   nodes: CloudNode[],
-  options?: { explain?: boolean }
 ): Promise<{ success: boolean }>
 ```
 
 #### Parameters
 
 - `nodes` *(CloudNode[])*: An array of file or folder nodes to delete.
-- `options` *(optional)*: `{ explain?: boolean }`.
 
 #### Example
 

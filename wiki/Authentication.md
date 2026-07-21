@@ -57,7 +57,7 @@ const session = await login("username", "password", {
     // You can prompt the user, or simply return a selection:
     return 0; // Selects the first choice
     // OR:
-    // return "The dress is white and gold"; // Selects the choice matching "The dress is white and gold" (case-insensitive)
+    return "The dress is white and gold"; // Selects the choice matching "The dress is white and gold" (case-insensitive)
   }
 });
 ```

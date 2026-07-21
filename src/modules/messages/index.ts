@@ -11,7 +11,6 @@ import {
 export interface GetMessagesOptions {
   folderId?: number;
   withContent?: boolean;
-  explain?: boolean;
 }
 
 export interface SendMessageData {
@@ -58,9 +57,7 @@ export async function getMessages(
     result.messages.received = await Promise.all(
       result.messages.received.map(async (msg: MessageEntry) => {
         try {
-          const detail = await getMessage(msg.id, {
-            explain: options.explain,
-          });
+          const detail = await getMessage(msg.id);
           return { ...msg, ...detail };
         } catch {
           return msg;
@@ -72,23 +69,18 @@ export async function getMessages(
   return result;
 }
 
-export async function getMessage(
-  id: number,
-  options: { explain?: boolean } = {},
-): Promise<MessageEntry> {
+export async function getMessage(id: number): Promise<MessageEntry> {
   assertPositiveNumber(id, 'message id');
   const account = requireCurrentAccount();
   const endpoint = `/eleves/${account.id}/messages/${id}.awp?v=7.14.3&verbe=get&mode=destinataire`;
   return edFetch<MessageEntry>(endpoint, {
     method: 'POST',
     body: { anneeMessages: '' },
-    ...options,
   });
 }
 
 export async function sendMessage(
   data: SendMessageData,
-  options: { explain?: boolean } = {},
 ): Promise<{ success: boolean }> {
   assertNonEmptyString(data.subject, 'subject');
   assertNonEmptyString(data.content, 'content');
@@ -99,6 +91,7 @@ export async function sendMessage(
   const endpoint = `/eleves/${account.id}/messages.awp?v=7.14.3&verbe=post`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
+    queued: true,
     body: {
       message: {
         subject: data.subject,
@@ -113,6 +106,5 @@ export async function sendMessage(
       },
       anneeMessages: '',
     },
-    ...options,
   });
 }
