@@ -1,5 +1,5 @@
 // © 2026 typeof (Scolup) | Licensed under AGPL 3.0
-import { edFetch } from '../../core/fetch';
+import { edFetch, type FetchOptions } from '../../core/fetch';
 import { postOptions, requireCurrentAccount } from '../../core/request';
 import { encodeBase64 } from '../../core/transform';
 import { EdApiError } from '../../core/errors';
@@ -26,16 +26,21 @@ export interface HomeworkResult {
   [date: string]: HomeworkEntry[];
 }
 
+export interface GetHomeworkOptions extends FetchOptions {
+  withContent?: boolean;
+}
+
 export async function getHomework(
-  options: { withContent?: boolean } = {},
+  options: GetHomeworkOptions = {},
 ): Promise<HomeworkResult> {
+  const { withContent, ...fetchOptions } = options;
   const account = requireCurrentAccount();
   const result = await edFetch<HomeworkResult>(
     `/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=get`,
-    postOptions({}, options),
+    postOptions({}, fetchOptions),
   );
 
-  if (options.withContent) {
+  if (withContent) {
     await Promise.all(
       Object.keys(result).map(async (date) => {
         const detail = (await getHomeworkForDate(date)) as any;
