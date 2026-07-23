@@ -2,7 +2,7 @@ blank_issues_enabled: false
 
 contact_links:
   - name: 📖 Documentation
-    url: https://github.com/Scolup/Linkdirecte/tree/main/docs
+    url: https://github.com/Scolup/Linkdirecte/wiki
     about: Check the docs before opening an issue, your question might already be answered.
   - name: 🐛 Quick bug report (no template)
     url: https://github.com/Scolup/Linkdirecte/issues/new
