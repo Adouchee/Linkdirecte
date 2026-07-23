@@ -34,7 +34,7 @@ export async function getHomework(options: GetHomeworkOptions = {}): Promise<Hom
   const { withContent, ...fetchOptions } = options;
   const account = requireCurrentAccount();
   const result = await edFetch<HomeworkResult>(
-    `/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=get`,
+    `/Eleves/${account.id}/cahierdetexte.awp?verbe=get`,
     postOptions({}, fetchOptions),
   );
 
@@ -56,13 +56,10 @@ export async function getHomeworkForDate(date: string | Date): Promise<HomeworkE
   if (formattedDate === 'Invalid Date') {
     throw new EdApiError(`Invalid date parameter: ${JSON.stringify(date)}`, 'INVALID_ARGUMENT');
   }
-  return edFetch<any>(
-    `/Eleves/${account.id}/cahierdetexte/${formattedDate}.awp?v=7.14.3&verbe=get`,
-    {
-      method: 'POST',
-      body: {},
-    },
-  );
+  return edFetch<any>(`/Eleves/${account.id}/cahierdetexte/${formattedDate}.awp?verbe=get`, {
+    method: 'POST',
+    body: {},
+  });
 }
 
 export interface MarkAsDoneResult {
@@ -73,7 +70,7 @@ export interface MarkAsDoneResult {
 export async function markAsDone(homeworkIds: number[]): Promise<MarkAsDoneResult> {
   assertNonEmptyArray(homeworkIds, 'homeworkIds');
   const account = requireCurrentAccount();
-  return edFetch<MarkAsDoneResult>(`/Eleves/${account.id}/cahierdetexte.awp?v=7.14.3&verbe=put`, {
+  return edFetch<MarkAsDoneResult>(`/Eleves/${account.id}/cahierdetexte.awp?verbe=put`, {
     method: 'POST',
     queued: true,
     body: {
@@ -90,7 +87,7 @@ export async function sendHomeworkComment(
   assertPositiveNumber(idContenu, 'idContenu');
   assertNonEmptyString(message, 'message');
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/afaire/commentaires.awp?v=7.14.3&verbe=post`;
+  const endpoint = `/eleves/${account.id}/afaire/commentaires.awp?verbe=post`;
   return edFetch<{ id: number }>(endpoint, {
     method: 'POST',
     queued: true,

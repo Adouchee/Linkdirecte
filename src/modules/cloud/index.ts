@@ -9,7 +9,7 @@ export interface GetCloudOptions {
 
 export async function getCloud(options: GetCloudOptions = {}): Promise<CloudEntry[]> {
   const account = requireCurrentAccount();
-  const endpoint = `/cloud/E/${account.id}.awp?v=7.14.3&verbe=get`;
+  const endpoint = `/cloud/E/${account.id}.awp?verbe=get`;
   return edFetch<CloudEntry[]>(endpoint, {
     method: 'POST',
     body: { profondeur: options.depth || 3 },
@@ -19,7 +19,7 @@ export async function getCloud(options: GetCloudOptions = {}): Promise<CloudEntr
 
 export async function createFolder(name: string, parentNode: CloudNode): Promise<CloudNode> {
   const account = requireCurrentAccount();
-  const endpoint = `/cloud/E/${account.id}.awp?v=7.14.3&verbe=post`;
+  const endpoint = `/cloud/E/${account.id}.awp?verbe=post`;
   return edFetch<CloudNode>(endpoint, {
     method: 'POST',
     queued: true,
@@ -29,7 +29,7 @@ export async function createFolder(name: string, parentNode: CloudNode): Promise
 
 export async function deleteNodes(nodes: CloudNode[]): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
-  const endpoint = `/cloud/E/${account.id}/visibility.awp?v=7.14.3&verbe=delete`;
+  const endpoint = `/cloud/E/${account.id}/visibility.awp?verbe=delete`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
     queued: true,

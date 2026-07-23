@@ -110,7 +110,7 @@ export async function login(
     twofaToken,
     xToken,
   } = await sendAuthRequest(
-    '/login.awp?v=7.14.3',
+    '/login.awp',
     {
       isReLogin: false,
       identifiant,
@@ -165,7 +165,7 @@ async function sendAuthRequest(
 
 async function fetchGtkToken(): Promise<string> {
   const response = await sendRequest({
-    url: buildApiUrl('/login.awp?gtk=1&v=7.14.3').toString(),
+    url: buildApiUrl('/login.awp?gtk=1').toString(),
     method: 'GET',
     headers: buildHeaders({ skipAuth: true }),
   });
@@ -187,13 +187,7 @@ async function handleTwoFactor(
     data: challenge,
     twofaToken: t3,
     xToken: x3,
-  } = await sendAuthRequest(
-    '/connexion/doubleauth.awp?verbe=get&v=7.14.3',
-    {},
-    gtk,
-    twofaToken,
-    xToken,
-  );
+  } = await sendAuthRequest('/connexion/doubleauth.awp?verbe=get', {}, gtk, twofaToken, xToken);
 
   const question = decodeBase64(challenge.data.question);
   const choices = challenge.data.propositions.map(decodeBase64);
@@ -223,7 +217,7 @@ async function handleTwoFactor(
       twofaToken: t4,
       xToken: x4,
     } = await sendAuthRequest(
-      '/connexion/doubleauth.awp?verbe=post&v=7.14.3',
+      '/connexion/doubleauth.awp?verbe=post',
       { choix: selected },
       gtk,
       t3,
@@ -236,7 +230,7 @@ async function handleTwoFactor(
       twofaToken: t5,
       xToken: x5,
     } = await sendAuthRequest(
-      '/login.awp?v=7.14.3',
+      '/login.awp',
       {
         isReLogin: false,
         identifiant,
@@ -322,7 +316,7 @@ export async function refreshToken(): Promise<string> {
     try {
       const gtk = await fetchGtkToken();
       const { data, xToken, twofaToken } = await sendAuthRequest(
-        '/login.awp?v=7.14.3',
+        '/login.awp',
         {
           identifiant: account.identifiant,
           isReLogin: true,

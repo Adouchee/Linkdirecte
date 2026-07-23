@@ -30,7 +30,7 @@ export interface AttendanceResult {
 
 export async function getAttendance(): Promise<AttendanceResult> {
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/viescolaire.awp?v=7.14.3&verbe=get`;
+  const endpoint = `/eleves/${account.id}/viescolaire.awp?verbe=get`;
   return edFetch<AttendanceResult>(endpoint, {
     method: 'POST',
     body: {},
