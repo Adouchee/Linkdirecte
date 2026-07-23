@@ -21,7 +21,7 @@ export interface DocumentsResult {
 }
 
 export async function getDocuments(): Promise<DocumentsResult> {
-  return edFetch<DocumentsResult>('/elevesDocuments.awp?v=7.14.3&verbe=get', {
+  return edFetch<DocumentsResult>('/elevesDocuments.awp?verbe=get', {
     method: 'POST',
     body: {},
   });

@@ -5,6 +5,8 @@ import { signalWithTimeout, isFormData } from './env';
 
 export const BASE_API_URL = 'https://api.ecoledirecte.com/v3';
 
+export const ED_VERSION = '7.14.3';
+
 export const DEFAULT_TIMEOUT_MS = 15_000;
 export const DEFAULT_MAX_RETRIES = 3;
 export const DEFAULT_RETRY_DELAY_MS = 500;
@@ -22,7 +24,11 @@ export function buildApiUrl(endpoint: string): URL {
   const baseUrl = config.proxyUrl || BASE_API_URL;
   const fullUrl = endpoint.startsWith('http') ? endpoint : `${baseUrl}${endpoint}`;
 
-  return new URL(fullUrl);
+  const url = new URL(fullUrl);
+  if (!endpoint.startsWith('http') && !url.searchParams.has('v')) {
+    url.searchParams.set('v', ED_VERSION);
+  }
+  return url;
 }
 
 export function appendQueryParams(url: URL, params?: QueryParams): void {

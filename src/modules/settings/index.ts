@@ -5,7 +5,7 @@ import type { AccountSettings } from '../../types';
 
 export async function getSettings(): Promise<AccountSettings> {
   const account = requireCurrentAccount();
-  const endpoint = `/logins/${account.idLogin}.awp?v=7.14.3&verbe=get`;
+  const endpoint = `/logins/${account.idLogin}.awp?verbe=get`;
   return edFetch<AccountSettings>(endpoint, {
     method: 'POST',
     body: {},
@@ -28,7 +28,7 @@ export async function updateSettings(data: {
   if (data.nouveauMotDePasse) {
     payload.confirmationMotDePasse = data.nouveauMotDePasse;
   }
-  const endpoint = `/logins/${account.idLogin}.awp?v=7.14.3&verbe=put`;
+  const endpoint = `/logins/${account.idLogin}.awp?verbe=put`;
   return edFetch<AccountSettings>(endpoint, {
     method: 'POST',
     queued: true,
@@ -39,7 +39,7 @@ export async function updateSettings(data: {
 export async function updateAccessibility(enabled: boolean): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
 
-  return edFetch<{ success: boolean }>(`/parametreIndividuel.awp?v=7.14.3&verbe=put`, {
+  return edFetch<{ success: boolean }>(`/parametreIndividuel.awp?verbe=put`, {
     method: 'POST',
     body: {
       path: `Préférences/Elèves/accessibiliteVisuelle/${account.id}`,

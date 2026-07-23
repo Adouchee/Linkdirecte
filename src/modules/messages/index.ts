@@ -43,7 +43,7 @@ export interface MessagesResult {
 
 export async function getMessages(options: GetMessagesOptions = {}): Promise<MessagesResult> {
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/messages.awp?v=7.14.3&verbe=get`;
+  const endpoint = `/eleves/${account.id}/messages.awp?verbe=get`;
 
   const result = await edFetch<MessagesResult>(endpoint, {
     method: 'POST',
@@ -70,7 +70,7 @@ export async function getMessages(options: GetMessagesOptions = {}): Promise<Mes
 export async function getMessage(id: number): Promise<MessageEntry> {
   assertPositiveNumber(id, 'message id');
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/messages/${id}.awp?v=7.14.3&verbe=get&mode=destinataire`;
+  const endpoint = `/eleves/${account.id}/messages/${id}.awp?verbe=get&mode=destinataire`;
   return edFetch<MessageEntry>(endpoint, {
     method: 'POST',
     body: { anneeMessages: '' },
@@ -84,7 +84,7 @@ export async function sendMessage(data: SendMessageData): Promise<{ success: boo
 
   const account = requireCurrentAccount();
 
-  const endpoint = `/eleves/${account.id}/messages.awp?v=7.14.3&verbe=post`;
+  const endpoint = `/eleves/${account.id}/messages.awp?verbe=post`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
     queued: true,

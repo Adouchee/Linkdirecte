@@ -7,9 +7,9 @@ import {
   memoryStorage,
   encryptedStorage,
 } from './storage';
+import { ED_VERSION } from './http';
 
-export const DEFAULT_USER_AGENT =
-  'Linkdirecte/1.0 (iPhone; CPU OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Mobile/15E148 EDMOBILE v7.14.3';
+export let DEFAULT_USER_AGENT = '';
 
 export interface EdState {
   config: EdConfig;
@@ -39,11 +39,17 @@ const state: EdState = {
     concurrency: 3,
     timeout: 15000,
     offlineQueue: false,
-    userAgent: DEFAULT_USER_AGENT,
+    userAgent: '',
   },
 };
 
 export function getConfig(): EdConfig {
+  if (!DEFAULT_USER_AGENT) {
+    DEFAULT_USER_AGENT = `Linkdirecte/1.0 (iPhone; CPU OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Mobile/15E148 EDMOBILE v${ED_VERSION}`;
+  }
+  if (!state.config.userAgent) {
+    state.config.userAgent = DEFAULT_USER_AGENT;
+  }
   if (!state.config.storage && !state.hasDetectedStorage) {
     setConfig({});
   }

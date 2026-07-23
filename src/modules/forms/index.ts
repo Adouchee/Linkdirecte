@@ -20,7 +20,7 @@ export interface QcmsResult {
 
 export async function getQcms(): Promise<QcmsResult> {
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/qcms/0/associations.awp?v=7.14.3&verbe=get`;
+  const endpoint = `/eleves/${account.id}/qcms/0/associations.awp?verbe=get`;
   return edFetch<QcmsResult>(endpoint, {
     method: 'POST',
     body: {},
@@ -39,7 +39,7 @@ export interface QcmDetailResult {
 
 export async function getQcmDetail(idQcm: number, idAssociation: number): Promise<QcmDetailResult> {
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/qcms/${idQcm}/associations/${idAssociation}.awp?v=7.14.3&verbe=get`;
+  const endpoint = `/eleves/${account.id}/qcms/${idQcm}/associations/${idAssociation}.awp?verbe=get`;
   return edFetch<QcmDetailResult>(endpoint, {
     method: 'POST',
     body: { anneeQCMs: '' },
@@ -53,7 +53,7 @@ export async function updateQcmStatus(
   action: 'updateStartDate' | 'updateEndDate',
 ): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/qcms/${idQcm}/associations/${idAssociation}/participants/${idParticipant}.awp?v=7.14.3&verbe=patch`;
+  const endpoint = `/eleves/${account.id}/qcms/${idQcm}/associations/${idAssociation}/participants/${idParticipant}.awp?verbe=patch`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
     body: { action },
@@ -69,7 +69,7 @@ export async function submitQcmAnswer(params: {
   choiceIds: number[];
 }): Promise<{ success: boolean }> {
   const account = requireCurrentAccount();
-  const endpoint = `/eleves/${account.id}/qcms/${params.idQcm}/associations/${params.idAssociation}/participants/${params.idParticipant}/reponse/${params.idReponse}.awp?v=7.14.3&verbe=patch`;
+  const endpoint = `/eleves/${account.id}/qcms/${params.idQcm}/associations/${params.idAssociation}/participants/${params.idParticipant}/reponse/${params.idReponse}.awp?verbe=patch`;
   return edFetch<{ success: boolean }>(endpoint, {
     method: 'POST',
     body: {
