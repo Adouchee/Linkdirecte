@@ -6,6 +6,7 @@ import { setAccount, setToken } from '../src/core/store';
 describe('Listen Module (Polling & Events)', () => {
   let originalFetch: typeof globalThis.fetch;
   let requests: string[] = [];
+  let unsubscribes: (() => void)[] = [];
 
   const mockAccount = {
     loginId: 1234567,
@@ -28,6 +29,7 @@ describe('Listen Module (Polling & Events)', () => {
   beforeEach(() => {
     originalFetch = globalThis.fetch;
     requests = [];
+    unsubscribes = [];
     setAccount(mockAccount);
     setToken('test_token');
     configure({ maxRetries: 0 });
@@ -36,6 +38,12 @@ describe('Listen Module (Polling & Events)', () => {
   afterEach(async () => {
     globalThis.fetch = originalFetch;
     stopPolling();
+    unsubscribes.forEach((unsub) => {
+      try {
+        unsub();
+      } catch {}
+    });
+    unsubscribes = [];
     await clearSession();
   });
 
@@ -120,9 +128,9 @@ describe('Listen Module (Polling & Events)', () => {
       expect(data.id).toBe(30);
     });
 
-    const removeGradeListener = on('newGrade', newGradeCallback);
-    const removeMessageListener = on('newMessage', newMessageCallback);
-    const removeTimelineListener = on('newTimelineEntry', newTimelineCallback);
+    unsubscribes.push(on('newGrade', newGradeCallback));
+    unsubscribes.push(on('newMessage', newMessageCallback));
+    unsubscribes.push(on('newTimelineEntry', newTimelineCallback));
 
     startPolling({ interval: 5000 });
 
@@ -135,10 +143,6 @@ describe('Listen Module (Polling & Events)', () => {
     expect(newGradeCallback).toHaveBeenCalled();
     expect(newMessageCallback).toHaveBeenCalled();
     expect(newTimelineCallback).toHaveBeenCalled();
-
-    removeGradeListener();
-    removeMessageListener();
-    removeTimelineListener();
   });
 
   it('emits pollingError event when a poll task fails', async () => {
@@ -150,7 +154,7 @@ describe('Listen Module (Polling & Events)', () => {
       expect(err).toBeDefined();
     });
 
-    on('pollingError', errorCallback);
+    unsubscribes.push(on('pollingError', errorCallback));
 
     startPolling({ interval: 5000 });
 
@@ -218,8 +222,8 @@ describe('Listen Module (Polling & Events)', () => {
       expect(err).toBeDefined();
     });
 
-    const removeGradeListener = on('newGrade', newGradeCallback);
-    const removeErrorListener = on('pollingError', errorCallback);
+    unsubscribes.push(on('newGrade', newGradeCallback));
+    unsubscribes.push(on('pollingError', errorCallback));
 
     startPolling({ interval: 5000 });
 
@@ -227,8 +231,5 @@ describe('Listen Module (Polling & Events)', () => {
 
     expect(newGradeCallback).toHaveBeenCalled();
     expect(errorCallback).toHaveBeenCalledTimes(2);
-
-    removeGradeListener();
-    removeErrorListener();
   });
 });

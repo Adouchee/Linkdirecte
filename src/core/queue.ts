@@ -14,7 +14,6 @@ interface QueuedMutation {
 export class OfflineQueue {
   private queue: QueuedMutation[] = [];
   private storage?: StorageAdapter;
-  private isFlushing = false;
   private flushPromise: Promise<void> | null = null;
 
   private lastAdapter: StorageAdapter | undefined = undefined;
@@ -37,10 +36,11 @@ export class OfflineQueue {
   }
 
   private async getInitPromise(storage: StorageAdapter): Promise<void> {
-    if (this.lastAdapter === storage && this.initPromise) {
+    const underlying = (storage as any).__rawStorage || storage;
+    if (this.lastAdapter === underlying && this.initPromise) {
       return this.initPromise;
     }
-    this.lastAdapter = storage;
+    this.lastAdapter = underlying;
     this.initPromise = (async () => {
       try {
         const saved = await storage.get('ed_offline_queue');
@@ -57,9 +57,13 @@ export class OfflineQueue {
 
   private enqueueWrite(storage: StorageAdapter, data: string): Promise<void> {
     const next = this.writeChain.then(async () => {
-      await storage.set('ed_offline_queue', data);
+      try {
+        await storage.set('ed_offline_queue', data);
+      } catch {
+        // swallow storage-write failures so the promise still resolves safely
+      }
     });
-    this.writeChain = next.catch(() => {});
+    this.writeChain = next;
     return next;
   }
 
@@ -89,15 +93,14 @@ export class OfflineQueue {
     }
 
     this.flushPromise = (async () => {
-      const storage = this.activeStorage;
-      if (storage) {
-        await this.getInitPromise(storage);
-      }
-
-      if (this.queue.length === 0) return;
-
-      this.isFlushing = true;
       try {
+        const storage = this.activeStorage;
+        if (storage) {
+          await this.getInitPromise(storage);
+        }
+
+        if (this.queue.length === 0) return;
+
         const remainingQueue: QueuedMutation[] = [];
 
         for (const mutation of this.queue) {
@@ -117,7 +120,6 @@ export class OfflineQueue {
           await this.enqueueWrite(storage, snapshot);
         }
       } finally {
-        this.isFlushing = false;
         this.flushPromise = null;
       }
     })();
@@ -127,6 +129,11 @@ export class OfflineQueue {
 
   getQueue(): QueuedMutation[] {
     return this.queue;
+  }
+
+  clear(): void {
+    this.queue = [];
+    this.flushPromise = null;
   }
 }
 

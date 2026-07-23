@@ -215,4 +215,34 @@ describe('Offline Queue Module', () => {
     expect(f1Resolved).toBe(true);
     expect(f2Resolved).toBe(true);
   });
+
+  it('allows flushing again after flushing an empty queue (flush empty-queue path regression)', async () => {
+    let callCount = 0;
+    globalThis.fetch = async (input) => {
+      callCount++;
+      return new Response(JSON.stringify({ code: 200, message: '', data: {} }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    };
+
+    (offlineQueue as any).storage = undefined;
+    (offlineQueue as any).lastAdapter = undefined;
+    (offlineQueue as any).initPromise = undefined;
+    configure({ storage: mockStorage });
+
+    // Flush an empty queue first (no requests should be sent, flushPromise should be cleared!)
+    await offlineQueue.flush();
+    expect(callCount).toBe(0);
+
+    // Enqueue a mutation
+    await offlineQueue.push('/mutation-after-empty.awp', { method: 'POST', body: { x: 1 } });
+
+    // Flush again
+    await offlineQueue.flush();
+
+    // Verify the mutation was delivered
+    expect(callCount).toBe(1);
+    expect(offlineQueue.getQueue().length).toBe(0);
+  });
 });

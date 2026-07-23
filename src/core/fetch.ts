@@ -125,8 +125,10 @@ export async function edFetch<T>(endpoint: string, options: FetchOptions = {}): 
     const data = await parseJsonResponse(response);
 
     if (headerToken) {
-      setToken(headerToken);
-      data.token = headerToken;
+      if (startGen === getSessionGeneration()) {
+        setToken(headerToken);
+        data.token = headerToken;
+      }
     }
 
     if (SESSION_EXPIRED_CODES.has(data.code)) {
@@ -163,7 +165,9 @@ export async function edFetch<T>(endpoint: string, options: FetchOptions = {}): 
     }
 
     if (data.token) {
-      setToken(data.token);
+      if (startGen === getSessionGeneration()) {
+        setToken(data.token);
+      }
     }
 
     if (options.returnEnvelope) {

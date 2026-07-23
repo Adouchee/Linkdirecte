@@ -159,6 +159,11 @@ export async function clearSession(): Promise<void> {
     clearCache();
   } catch {}
 
+  try {
+    const { offlineQueue } = await import('./queue');
+    offlineQueue.clear();
+  } catch {}
+
   const storage = getConfig().storage;
   if (!storage) return;
 
