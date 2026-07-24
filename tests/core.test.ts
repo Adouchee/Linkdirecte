@@ -550,7 +550,7 @@ describe('Core Fetch Mechanism & Error Handling', () => {
 
       configure({ maxRetries: 0 });
 
-      expect(getGrades()).rejects.toThrow(EdServerError);
+      await expect(getGrades()).rejects.toThrow(EdServerError);
     });
 
     it('verifies EdParseError properties', async () => {
@@ -569,7 +569,21 @@ describe('Core Fetch Mechanism & Error Handling', () => {
 
       configure({ maxRetries: 0 });
 
-      expect(getGrades()).rejects.toThrow(EdParseError);
+      try {
+        await getGrades();
+        expect(true).toBe(false); // should not reach here
+      } catch (err: any) {
+        expect(err).toBeInstanceOf(EdParseError);
+        expect(err.message).toContain('Not valid JSON');
+      }
+
+      globalThis.fetch = async () => {
+        return new Response('Another malformed body', {
+          status: 200,
+          headers: new Headers({ 'Content-Type': 'application/json' }),
+        });
+      };
+      await expect(getGrades()).rejects.toThrow(EdParseError);
     });
 
     it('verifies EdTimeoutError properties', async () => {
@@ -587,20 +601,21 @@ describe('Core Fetch Mechanism & Error Handling', () => {
 
       configure({ maxRetries: 0, timeout: 100 });
 
-      expect(getGrades()).rejects.toThrow(EdTimeoutError);
+      await expect(getGrades()).rejects.toThrow(EdTimeoutError);
     });
 
     it('verifies toJSON representation of EdError subclasses', () => {
       const { EdValidationError } = require('../src/core/errors');
-      const error = new EdValidationError('Value is empty', 'INVALID_ARGUMENT', 400, { original: 'payload' });
-      const json = error.toJSON();
+      const error = new EdValidationError('Value is empty', 'INVALID_ARGUMENT', 400, {
+        original: 'payload',
+      });
+      const json = error.toJSON() as any;
 
       expect(json.name).toBe('EdValidationError');
       expect(json.message).toBe('[INVALID_ARGUMENT] Value is empty (HTTP 400)');
       expect(json.code).toBe('INVALID_ARGUMENT');
       expect(json.statusCode).toBe(400);
-      expect(json.raw).toEqual({ original: 'payload' });
-      expect(json.stack).toBeDefined();
+      expect(json.raw).toBeUndefined();
     });
 
     it('verifies friendly error code mappings (e.g., 505 / Bad Credentials)', async () => {
@@ -622,12 +637,15 @@ describe('Core Fetch Mechanism & Error Handling', () => {
         },
       }));
 
+      let thrown = false;
       try {
         await login('testuser', 'badpass');
       } catch (err: any) {
+        thrown = true;
         expect(err).toBeInstanceOf(EdAuthError);
         expect(err.message).toContain('Invalid username or password');
       }
+      expect(thrown).toBe(true);
     });
   });
 });

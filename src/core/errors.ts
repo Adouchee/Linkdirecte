@@ -19,7 +19,6 @@ export class EdError extends Error {
       message: this.message,
       code: this.code,
       statusCode: this.statusCode,
-      raw: this.raw,
       stack: this.stack,
     };
   }

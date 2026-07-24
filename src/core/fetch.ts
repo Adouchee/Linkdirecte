@@ -135,12 +135,7 @@ export async function edFetch<T>(endpoint: string, options: FetchOptions = {}): 
       if (attempts >= 1) {
         const rawMsg = data.message || 'Session expired after refresh attempt';
         const friendlyMsg = getFriendlyErrorMessage(String(data.code), rawMsg);
-        throw new EdAuthError(
-          friendlyMsg,
-          String(data.code),
-          response.status,
-          data,
-        );
+        throw new EdAuthError(friendlyMsg, String(data.code), response.status, data);
       }
 
       if (!refreshPromise) {
@@ -153,12 +148,7 @@ export async function edFetch<T>(endpoint: string, options: FetchOptions = {}): 
       if (!refreshed) {
         const rawMsg = data.message || 'Session expired';
         const friendlyMsg = getFriendlyErrorMessage(String(data.code), rawMsg);
-        throw new EdAuthError(
-          friendlyMsg,
-          String(data.code),
-          response.status,
-          data,
-        );
+        throw new EdAuthError(friendlyMsg, String(data.code), response.status, data);
       }
 
       return run(attempts + 1);

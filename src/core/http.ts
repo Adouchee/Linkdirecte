@@ -142,10 +142,11 @@ export async function parseJsonResponse(response: Response): Promise<any> {
     throw new EdServerError(`Server error: ${response.status}`, 'SERVER_ERROR', response.status);
   }
 
+  const clonedResponse = response.clone();
   try {
     return await response.json();
   } catch (error: any) {
-    const text = await response.text().catch(() => '');
+    const text = await clonedResponse.text().catch(() => '');
     throw new EdParseError(
       `Failed to parse response as JSON (HTTP ${response.status}): ${text.slice(0, 200)}`,
       'PARSE_ERROR',

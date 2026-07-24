@@ -33,8 +33,8 @@ All errors produced by the SDK feature standard properties:
 | `message` | `string` | Human-readable message, formatted with the code prefix and status suffix. |
 | `code` | `string` | A unique string/integer identifier (e.g., `"TIMEOUT_ERROR"`, `"505"`, `"INVALID_ARGUMENT"`). |
 | `statusCode` | `number \| undefined` | The associated HTTP status code, if applicable. |
-| `raw` | `unknown \| undefined` | The raw API response payload or original exception source. |
-| `stack` | `string` | Standard V8 error stack trace. |
+| `raw` | `unknown \| undefined` | The raw API response payload or original exception source. (Omitted from default `toJSON()` serialization). |
+| `stack` | `string \| undefined` | Optional, non-standard error stack trace. |
 
 ---
 
