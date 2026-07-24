@@ -1,5 +1,5 @@
 <p align="center">
-  <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Errors&amp;subtitle=Learn+how+to+handle+exceptions+in+Linkdirecte.&amp;logo=lu%3AAlertTriangle&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Errors | Learn how to handle exceptions in Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Errors&amp;subtitle=Learn+how+to+handle+exceptions+in+Linkdirecte.&amp;logo=lu%3AAlertTriangle&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
+  <picture><source media="(prefers-color-scheme: light)" srcset="https://shieldcn.dev/header/glow.svg?title=Errors&amp;subtitle=Learn+how+to+handle+exceptions+in+Linkdirecte.&amp;logo=lu%3ACircleX&amp;mode=light&amp;theme=blue&amp;align=left" /><img alt="Errors | Learn how to handle exceptions in Linkdirecte." src="https://shieldcn.dev/header/glow.svg?title=Errors&amp;subtitle=Learn+how+to+handle+exceptions+in+Linkdirecte.&amp;logo=lu%3AAlertTriangle&amp;mode=dark&amp;theme=blue&amp;align=left" /></picture>
 </p>
 
 Linkdirecte provides a comprehensive, granular, and type-safe error taxonomy designed to make debugging simple. All custom errors inherit from the base class `EdError`, ensuring that you can catch all SDK-related exceptions cleanly.
